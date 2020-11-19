@@ -3,14 +3,35 @@
 <div class="container-fluid animatedParent animateOnce my-3" id="curso">
 	<div class="animated">
 	
+	<div class="row">
+			<div class="col-12 col-md-6 mt-2 mb-2">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Agregar Nuevo Cursos </h5>
+						<form>
+							<div class="form-group">
+								<div class="form-group">
+									<label>Nombre Cursos</label>
+									<input v-model="cursos.fullname" type="text" class="form-control">
+									<label>Abreviación Curso </label>
+									<input v-model="cursos.shortname" type="text"  class="form-control"> </input>
+									<label>Descripcion Curso </label>
+									<textarea v-model="cursos.summary" type="text" style="min-height: 100px" class="form-control"> </textarea>
+									<label >Curso Visible</label>
+									<v-select placeholder="Seleccione una opcion" @input="" :options="visible" label="name" :reduce="categoria => categoria.id" v-model="cursos.visible" ></v-select>
+									<label>Categoria</label>
+									<v-select placeholder="Seleccione cursos" @input="" :options="arrayCategorias" label="name" :reduce="categoria => categoria.id" v-model="cursos.categoryid" ></v-select>
+									<div class="mt-3 d-flex justify-content-end">
+										<button @click="createdCursos" class="button btn btn-success">Guardar Categoria</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 
-
-
-
-
-
-
-	
 		<div class="row">
 			<div class="col-12 mt-2 mb-2">
 				<div class="card">
@@ -41,6 +62,17 @@
         el:"#curso",
         data() {
             return {
+				cursos:{
+					fullname:"",
+					shortname:"",
+					summary:"",
+					categoryid  :"",
+					visible:"1",
+				},
+				visible:[
+					{id: '1', name: 'visible', },
+                    {id: '0', name: 'no visible',},	
+	 			],
 				arrayCursos:[],
 				arrayCategorias:[],
 				filtro:"",
@@ -71,6 +103,31 @@
             }
         },
         methods: {
+			createdCursos(){
+				if (this.cursos.fullname === ""|| this.cursos.shortname === "" || this.cursos.categoryid === "") {
+					Swal.fire({
+						icon: 'error',
+						title: 'Oops... prese que los campos estan sin datos',
+						text: 'corrobora tu informacion',
+
+					})
+
+				} else {
+
+
+					axios.post("/index.php/Cursos/created_courses",{cursos:this.cursos}).then((res) => {
+
+						Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Datos Guardados Correctamente',
+  showConfirmButton: false,
+  timer: 1500
+})
+					});
+				}
+
+			},
 			
 			getCurso(){
 
@@ -93,7 +150,8 @@
 		 getByFiltro(){
 			 axios.post("/index.php/Cursos/getcoursesByFilter",{filtro:this.filtro}).then((res)=>{
 
-                this.arrayCursos = res.data;
+				this.arrayCursos = res.data.courses;
+				console.log(this.arrayCursos);
 		 });
 		}
 		},
