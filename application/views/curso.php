@@ -3,6 +3,14 @@
 <div class="container-fluid animatedParent animateOnce my-3" id="curso">
 	<div class="animated">
 	
+
+
+
+
+
+
+
+	
 		<div class="row">
 			<div class="col-12 mt-2 mb-2">
 				<div class="card">
@@ -11,9 +19,6 @@
                         <v-select placeholder="Seleccione como filtrar  los cursos" @input="getByFiltro" :options="arrayCategorias" label="name" :reduce="categoria => categoria.id" v-model="filtro" ></v-select>
 						<h5 class="card-title">Listado de Cursos</h5>
 						<v-client-table :columns="columns" v-model="arrayCursos" :options="options">
-						
-				
-
 						
 							<div slot="acciones" slot-scope="{row}">
 								<button data-toggle="modal" v-on:click="updateCursos(row)" class="btn btn-info"> Editar </button>
