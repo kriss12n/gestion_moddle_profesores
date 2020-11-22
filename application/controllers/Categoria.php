@@ -25,7 +25,6 @@ class Categoria extends CI_Controller {
 		$MoodleRest->setServerAddress("https://educacion.citizenapp.cl/webservice/rest/server.php");
 		$MoodleRest->setToken('5da89f5f2ca98b8f3d3582933c4d7095');
 
-print_r($this->request);
 
 		$new_categoria = array("categories"=>array(	
             array(	"name" =>$this->request->categoria->name,

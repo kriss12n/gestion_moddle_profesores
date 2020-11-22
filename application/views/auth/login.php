@@ -6,15 +6,6 @@
                 <img src="<?=  base_url()?>assets/img/basic/logo_citizen_app_colored.png" alt=""/>
             </div>
             <div class="p-5">
-			<?php
-//contador del número de accesos a una página por sesión.
-session_start();
-if (!isset($_SESSION["count"])) {
-    $_SESSION["count"] = 0;
-} else {
-    $_SESSION["count"]++;
-}
-?>
 
 <html>
 <head>
@@ -23,11 +14,7 @@ if (!isset($_SESSION["count"])) {
 <body>
 <p>
 
-<?php
-print("Hola, has accedido a esta página ");
-print($_SESSION["count"]);
-print(" veces.");
-?>
+
                 <h3>Bienvenido</h3>
                 <p>Bienvenido al panel de gestión de CitizenApp</p>
                 <form>

@@ -33,6 +33,11 @@
 			   <span>Cursos</span>
 		   </a>
 		   </li>
+		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/Notas/index">
+			   <i class="icon icon-account_box light-green-text s-18"></i>
+			   <span>Notas</span>
+		   </a>
+		   </li>
 			   <!-- <li class="treeview"><a href="#">
                 <i class="icon icon-account_box purple-text s-18"></i> <span>Asignar clientes</span> <i
                     class="icon icon-angle-left s-18 pull-right"></i>

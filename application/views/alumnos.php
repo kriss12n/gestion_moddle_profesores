@@ -38,7 +38,76 @@
  			<div class="col-12 mt-2 mb-2">
  				<div class="card">
  					<div class="card-body">
- 						<h5 class="card-title">Listado de Alumnos</h5>
+						 <h5 class="card-title">Listado de Alumnos</h5>
+						 
+						 <div v-for="value in arrayAlumnos" >
+	<div  class="modal fade" :id="['Vermas' + value.id]" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ value.name}} {{ value.lastname_p}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+
+	  <table>
+
+  <tr>
+    <td scope="row" > Datos</td><td> </td><th scope="col">Informacion </th>
+  </tr>
+  <tr>
+    <th scope="row">Rut:  </th><td> </td><td> {{ value.rut}}</td>
+  </tr>
+  <tr>
+    <th scope="row">Nombre</th><td> </td><td>{{ value.name}}</td>
+  </tr>
+  <tr>
+    <th scope="row">Apellido Paterno:  </th><td> </td><td> {{ value.lastname_p}}</td>
+  </tr>
+  <tr>
+    <th scope="row">Apellido Materno:  </th><td> </td><td> {{ value.lastname_m}}</td>
+  </tr>
+  <tr>
+    <th scope="row">Direccion:  </th><td> </td><td> {{ value.address}}</td>
+  </tr>
+  <tr>
+    <th scope="row">Comuna:  </th><td> </td><td> {{ value.commune}}</td>
+  </tr>
+  <tr>
+    <th scope="row">Coreo:  </th><td> </td><td> {{ value.email}}</td>
+  </tr>
+  <tr v-if=" value.rol_id>=2">
+    <th scope="row">Telefono:  </th><td> </td><td> {{ value.phone}}</td>
+  </tr>
+  <tr>
+    <th scope="row">Rol:  </th><td> </td><td> {{ value.rol}}</td>
+  </tr>
+  <tr v-if="value.rol_id==1">
+    <th scope="row">Representante:  </th><td> {{ value.representative_id}}</td>
+  </tr>
+  <tr v-if="value.rol_id==1">
+    <th scope="row">Representante Suplete:  </th><td> {{ value.representative_supp_id}}</td>
+  </tr>
+
+  <tr v-if="value.rol_id==1">
+    <th scope="row">Curso Actual:  </th><td> {{ value.course_id}}</td>
+  </tr>
+</table>
+	
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
  						<v-client-table :columns="columns" v-model="arrayAlumnos" :options="options">
  							<div slot="fullname" slot-scope="{row}">
  								<div class="avatar avatar-md mr-3 mt-1 d-flex float-left">
@@ -53,6 +122,7 @@
  							</div>
 
  							<div slot="acciones" slot-scope="{row}">
+							 <button class="btn btn-success"  data-toggle="modal"  :data-target="['#Vermas' + row.id]"> VER</button>
  								<button data-toggle="modal" v-on:click="updateAlumnos(row)" class="btn btn-info"> Editar </button>
  								<button class="btn btn-danger" v-on:click="deleteAlumnos(row)"> Eliminar</button>
  							</div>
@@ -82,12 +152,15 @@
  					city: "",
  					address: ""
  				},
- 				columns: ['fullname', 'email', 'phone1', 'city', 'address', "acciones"],
+ 				columns: ['id', 'rut', 'name', 'lastname_p', 'lastname_m','email','contact_movil','rol','commune','address','acciones' ],
  				options: {
  					headings: {
- 						fullname: 'Nombre Completo',
+						name: 'Nombre',
+						lastname_p:"Apellido Paterno",
+						lastname_m:"Apellido Materno",
  						email: 'Correo electronico',
- 						phone: 'N° de Telefono',
+ 						contact_movil: 'N° de Telefono Personal',
+						 commune:'Comuna',
  						city: "Ciudad",
  						address: "Dirección",
  						acciones: "Acciones"
@@ -115,7 +188,7 @@
  			getAlumnos() {
  				axios.post("/index.php/Alumnos/getAlumnos").then((res) => {
 
- 					this.arrayAlumnos = res.data.users;
+ 					this.arrayAlumnos = res.data;
  					console.log(this.arrayAlumnos);
 
  				});

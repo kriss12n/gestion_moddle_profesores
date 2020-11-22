@@ -14,6 +14,7 @@ class Alumnos extends CI_Controller
 		$this->load->helper('url');
 		$this->load->library('MoodleRest');
 		$this->request = json_decode(file_get_contents('php://input'));
+		$this->load->model("UsuarioModel");
 	}
 
 	public function index()
@@ -25,27 +26,10 @@ class Alumnos extends CI_Controller
 	}
 	public function getAlumnos()
 	{
+		$users = $this->UsuarioModel->getUsuario();
+		echo json_encode($users);
 
-		require_once(APPPATH . 'libraries/MoodleRest.php');
-		$MoodleRest = new MoodleRest();
-		$MoodleRest->setServerAddress("https://educacion.citizenapp.cl/webservice/rest/server.php");
-		$MoodleRest->setToken('5da89f5f2ca98b8f3d3582933c4d7095');
-
-		$users = $MoodleRest->request(
-
-			'core_user_get_users',
-			array(
-				"criteria" => array(
-					array(
-						"key" => "role",
-						"value" => "1"
-					),
-				)
-			),
-			MoodleRest::RETURN_JSON
-		);
-
-		echo json_encode($users, true);
+		
 	}
 
 	public function createAlumnos()
