@@ -116,7 +116,7 @@
  													<td> </td>
  													<td> {{ value.commune}}</td>
  												</tr>
- 												<tr>
+ 												<tr v-if="value.rol_id == 2 || value.rol_id == 4">
  													<th scope="row">Coreo: </th>
  													<td> </td>
  													<td> {{ value.email}}</td>
@@ -333,6 +333,7 @@
  								this.getAlumnos();
  								this.getRol();
  								this.getApoderado();
+								 this.limpiar();
  								Swal.close();
 
  							});
@@ -400,7 +401,7 @@
  			deleteAlumnos(row) {
 
  				Swal.fire({
- 					title: `Estas seguro de eliminar a ${row.fullname} `,
+ 					title: `Estas seguro de eliminar a ${row.name} ${row.lastname_p} `,
  					text: "Una vez eliminado no se podra recuperar",
  					icon: 'warning',
  					showCancelButton: true,
