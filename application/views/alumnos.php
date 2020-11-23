@@ -8,24 +8,53 @@
  						<form>
  							<div class="form-group">
  								<div class="form-group">
+ 									<label>Rut</label>
+ 									<input v-model="alumno.rut" type="text" class="form-control">
+
  									<label>Nombre</label>
  									<input v-model="alumno.name" type="text" class="form-control">
- 									<label>Apellidos</label>
- 									<input v-model="alumno.lastname" type="text" class="form-control">
- 									<label>Correo electronico</label>
- 									<input v-model="alumno.email" type="email" class="form-control">
- 									<label>Numero de telefono</label>
- 									<input v-model="alumno.phone1" type="text" class="form-control">
- 									<label>Nombre de usuario (no se pude repetir)</label>
- 									<input v-model="alumno.username" type="text" class="form-control">
- 									<label>Contraseña</label>
- 									<input v-model="alumno.password" type="text" class="form-control">
- 									<label>Ciudad</label>
- 									<input v-model="alumno.city" type="text" class="form-control">
+
+ 									<label>Apellido Paterno</label>
+ 									<input v-model="alumno.lastname_p" type="text" class="form-control">
+
+ 									<label>Apellido Materno</label>
+ 									<input v-model="alumno.lastname_m" type="text" class="form-control">
+
+ 									<label v-if="alumno.rol_id == 4 || alumno.rol_id == 2">Correo electronico</label>
+ 									<input v-if="alumno.rol_id == 4 || alumno.rol_id == 2" v-model="alumno.email" type="text" class="form-control">
+
+ 									<label>Rol</label>
+ 									<v-select placeholder="Seleccione como filtrar  los cursos" @input=" " :options="arrayRol" label="name" :reduce="Rol => Rol.id" v-model="alumno.rol_id"></v-select>
+
+ 									<label v-if="alumno.rol_id > 1">Telefono fijo </label>
+ 									<input v-if="alumno.rol_id > 1" v-model="alumno.phone" type="text" class="form-control">
+
+ 									<label>Telefono Movil</label>
+ 									<input v-model="alumno.contact_movil" type="text" class="form-control">
+
+ 									<label>Comuna</label>
+ 									<input v-model="alumno.commune" type="text" class="form-control">
+
  									<label>Dirección</label>
  									<input v-model="alumno.address" type="text" class="form-control">
+
+ 									<label v-if="alumno.rol_id == 1">Curso</label>
+ 									<input v-if="alumno.rol_id == 1" v-model="alumno.curso" type="text" class="form-control">
+
+ 									<label v-if="alumno.rol_id == 1">Prioridad</label>
+ 									<v-select v-if="alumno.rol_id == 1" placeholder="Seleccione Tipo de Prioridad" :options="prioridad" label="name" :reduce="prioridad => prioridad.id" v-model="alumno.prioritary"></v-select>
+
+ 									<label v-if="alumno.rol_id == 1">Representante</label>
+ 									<v-select v-if="alumno.rol_id == 1" placeholder="Seleccione Representante" :options="arrayApoderado" label="rut" :reduce="representative_id => representative_id.id" v-model="alumno.representative_id"></v-select>
+
+ 									<label v-if="alumno.rol_id == 1">Representante Suplente </label>
+ 									<v-select v-if="alumno.rol_id == 1" placeholder="Seleccione Representante" :options="arrayApoderado" label="rut" :reduce="representative_supp_id => representative_supp_id.id" v-model="alumno.representative_supp_id"></v-select>
+
+ 									<label v-if="alumno.rol_id == 2 || alumno.rol_id == 4">Contraseña</label>
+ 									<input v-if="alumno.rol_id == 2 || alumno.rol_id == 4" v-model="alumno.password" type="text" class="form-control">
+
  									<div class="mt-3 d-flex justify-content-end">
- 										<button v-on:click="createAlumnos" class="btn btn-success">Guardar alumno</button>
+ 										<button v-on:click="create($event)" class="btn btn-success">Guardar </button>
  									</div>
  								</div>
  							</div>
@@ -38,75 +67,97 @@
  			<div class="col-12 mt-2 mb-2">
  				<div class="card">
  					<div class="card-body">
-						 <h5 class="card-title">Listado de Alumnos</h5>
-						 
-						 <div v-for="value in arrayAlumnos" >
-	<div  class="modal fade" :id="['Vermas' + value.id]" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{ value.name}} {{ value.lastname_p}}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
+ 						<h5 class="card-title">Listado de Alumnos</h5>
 
+ 						<div v-for="value in arrayAlumnos">
+ 							<div class="modal fade" :id="['Vermas' + value.id]" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ 								<div class="modal-dialog" role="document">
+ 									<div class="modal-content">
+ 										<div class="modal-header">
+ 											<h5 class="modal-title" id="exampleModalLabel">{{ value.name}} {{ value.lastname_p}}</h5>
+ 											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+ 												<span aria-hidden="true">&times;</span>
+ 											</button>
+ 										</div>
+ 										<div class="modal-body">
+ 											<table>
+ 												<tr>
+ 													<td scope="row"> Datos</td>
+ 													<td> </td>
+ 													<th scope="col">Informacion </th>
+ 												</tr>
+ 												<tr>
+ 													<th scope="row">Rut: </th>
+ 													<td> </td>
+ 													<td> {{ value.rut}}</td>
+ 												</tr>
+ 												<tr>
+ 													<th scope="row">Nombre</th>
+ 													<td> </td>
+ 													<td>{{ value.name}}</td>
+ 												</tr>
+ 												<tr>
+ 													<th scope="row">Apellido Paterno: </th>
+ 													<td> </td>
+ 													<td> {{ value.lastname_p}}</td>
+ 												</tr>
+ 												<tr>
+ 													<th scope="row">Apellido Materno: </th>
+ 													<td> </td>
+ 													<td> {{ value.lastname_m}}</td>
+ 												</tr>
+ 												<tr>
+ 													<th scope="row">Direccion: </th>
+ 													<td> </td>
+ 													<td> {{ value.address}}</td>
+ 												</tr>
+ 												<tr>
+ 													<th scope="row">Comuna: </th>
+ 													<td> </td>
+ 													<td> {{ value.commune}}</td>
+ 												</tr>
+ 												<tr>
+ 													<th scope="row">Coreo: </th>
+ 													<td> </td>
+ 													<td> {{ value.email}}</td>
+ 												</tr>
+ 												<tr v-if=" value.rol_id>=2">
+ 													<th scope="row">Telefono: </th>
+ 													<td> </td>
+ 													<td> {{ value.phone}}</td>
+ 												</tr>
+ 												<tr>
+ 													<th scope="row">Rol: </th>
+ 													<td> </td>
+ 													<td> {{ value.rol}}</td>
+ 												</tr>
+ 												<tr v-if="value.rol_id==1">
+ 													<th scope="row">Representante: </th>
+ 													<td> {{ value.representative_id}}</td>
+ 												</tr>
+ 												<tr v-if="value.rol_id==1">
+ 													<th scope="row">Representante Suplete: </th>
+ 													<td> {{ value.representative_supp_id}}</td>
+ 												</tr>
 
+ 												<tr v-if="value.rol_id==1">
+ 													<th scope="row">Curso Actual: </th>
+ 													<td> {{ value.course_id}}</td>
+ 												</tr>
+ 											</table>
 
-	  <table>
+ 										</div>
+ 										<div class="modal-footer">
+ 											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+ 											<button type="button" class="btn btn-primary">Save changes</button>
+ 										</div>
+ 									</div>
+ 								</div>
+ 							</div>
+ 						</div>
 
-  <tr>
-    <td scope="row" > Datos</td><td> </td><th scope="col">Informacion </th>
-  </tr>
-  <tr>
-    <th scope="row">Rut:  </th><td> </td><td> {{ value.rut}}</td>
-  </tr>
-  <tr>
-    <th scope="row">Nombre</th><td> </td><td>{{ value.name}}</td>
-  </tr>
-  <tr>
-    <th scope="row">Apellido Paterno:  </th><td> </td><td> {{ value.lastname_p}}</td>
-  </tr>
-  <tr>
-    <th scope="row">Apellido Materno:  </th><td> </td><td> {{ value.lastname_m}}</td>
-  </tr>
-  <tr>
-    <th scope="row">Direccion:  </th><td> </td><td> {{ value.address}}</td>
-  </tr>
-  <tr>
-    <th scope="row">Comuna:  </th><td> </td><td> {{ value.commune}}</td>
-  </tr>
-  <tr>
-    <th scope="row">Coreo:  </th><td> </td><td> {{ value.email}}</td>
-  </tr>
-  <tr v-if=" value.rol_id>=2">
-    <th scope="row">Telefono:  </th><td> </td><td> {{ value.phone}}</td>
-  </tr>
-  <tr>
-    <th scope="row">Rol:  </th><td> </td><td> {{ value.rol}}</td>
-  </tr>
-  <tr v-if="value.rol_id==1">
-    <th scope="row">Representante:  </th><td> {{ value.representative_id}}</td>
-  </tr>
-  <tr v-if="value.rol_id==1">
-    <th scope="row">Representante Suplete:  </th><td> {{ value.representative_supp_id}}</td>
-  </tr>
-
-  <tr v-if="value.rol_id==1">
-    <th scope="row">Curso Actual:  </th><td> {{ value.course_id}}</td>
-  </tr>
-</table>
-	
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+ 						<label>Filtrar Por Rol</label>
+ 						<v-select placeholder="Seleccione como filtrar  los cursos" @input="Filtro" :options="arrayRol" label="name" :reduce="Role => Role.id" v-model="filtro"></v-select>
 
  						<v-client-table :columns="columns" v-model="arrayAlumnos" :options="options">
  							<div slot="fullname" slot-scope="{row}">
@@ -122,7 +173,7 @@
  							</div>
 
  							<div slot="acciones" slot-scope="{row}">
-							 <button class="btn btn-success"  data-toggle="modal"  :data-target="['#Vermas' + row.id]"> VER</button>
+ 								<button class="btn btn-success" data-toggle="modal" :data-target="['#Vermas' + row.id]"> VER</button>
  								<button data-toggle="modal" v-on:click="updateAlumnos(row)" class="btn btn-info"> Editar </button>
  								<button class="btn btn-danger" v-on:click="deleteAlumnos(row)"> Eliminar</button>
  							</div>
@@ -137,30 +188,55 @@
  </div>
  <script>
  	Vue.use(VueTables.ClientTable);
+ 	Vue.component('v-select', VueSelect.VueSelect)
  	const panel = new Vue({
  		el: "#panel",
  		data() {
  			return {
+ 				filtro: '',
+ 				prioridad: [{
+ 						id: '0',
+ 						name: 'No',
+ 					},
+ 					{
+ 						id: '1',
+ 						name: 'Si',
+ 					},
+ 					{
+ 						id: '2',
+ 						name: 'En Tramite',
+ 					},
+
+ 				],
  				arrayAlumnos: [],
- 				alumno: {
+ 				arrayApoderado: [],
+ 				arrayRol: [],
+ 				alumno:{
+ 					rut: "",
  					name: "",
- 					lastname: "",
+ 					lastname_p: "",
+ 					lastname_m: "",
  					email: "",
- 					phone1: "",
- 					username: "",
+ 					phone: "",
+ 					address: "",
+ 					rol_id: "1",
+ 					commune: "",
  					password: "",
- 					city: "",
- 					address: ""
+ 					course_id: "",
+ 					prioritary: "0",
+ 					representative_id: "",
+ 					representative_supp_id: "",
+ 					contact_movil: ""
  				},
- 				columns: ['id', 'rut', 'name', 'lastname_p', 'lastname_m','email','contact_movil','rol','commune','address','acciones' ],
+ 				columns: ['id', 'rut', 'name', 'lastname_p', 'lastname_m', 'email', 'contact_movil', 'rol', 'commune', 'address', 'acciones'],
  				options: {
  					headings: {
-						name: 'Nombre',
-						lastname_p:"Apellido Paterno",
-						lastname_m:"Apellido Materno",
+ 						name: 'Nombre',
+ 						lastname_p: "Apellido Paterno",
+ 						lastname_m: "Apellido Materno",
  						email: 'Correo electronico',
  						contact_movil: 'N° de Telefono Personal',
-						 commune:'Comuna',
+ 						commune: 'Comuna',
  						city: "Ciudad",
  						address: "Dirección",
  						acciones: "Acciones"
@@ -181,8 +257,11 @@
  						columns: 'Columnas'
  					},
  				},
+
  			}
+
  		},
+
 
  		methods: {
  			getAlumnos() {
@@ -193,25 +272,125 @@
 
  				});
  			},
- 			createAlumnos() {
- 				Swal.fire({
- 					title: 'Ingresando Alumno al sistema',
- 					timerProgressBar: true,
- 					showConfirmButton: false,
- 					willOpen: async () => {
- 						Swal.showLoading()
+ 			getRol() {
+ 				axios.post("/index.php/Alumnos/getRol").then((res) => {
 
- 						await axios.post("/index.php/Alumnos/createAlumnos", {
- 							alumno: this.alumno
- 						}).then((res) => {
- 							this.limpiar();
- 							this.getAlumnos();
- 							Swal.close();
+ 					this.arrayRol = res.data;
+ 					console.log(this.arrayRol);
 
- 						});
+ 				});
+ 			},
+ 			getApoderado() {
+ 				axios.post("/index.php/Alumnos/getApoderado").then((res) => {
 
- 					}
- 				})
+ 					this.arrayApoderado = res.data;
+ 					console.log(this.arrayApoderado);
+
+ 				});
+ 			},
+ 			create(e) {
+				 e.preventDefault();
+				
+				 
+ 				if (this.alumno.rol_id == 1) {
+					 
+ 					alert("alummmno")
+					 
+ 					Swal.fire({
+ 						title: 'Ingresando Alumno al sistema',
+ 						timerProgressBar: true,
+ 						showConfirmButton: false,
+ 						willOpen: async () => {
+ 							Swal.showLoading()
+
+ 							await axios.post("/index.php/Alumnos/createAlumnos", {
+ 								alumno: this.alumno
+ 							}).then((res) => {
+
+ 								this.getAlumnos();
+ 								this.getRol();
+ 								this.getApoderado();
+ 								Swal.close();
+
+ 							});
+
+ 						}
+ 					})
+ 				}
+ 				if (this.alumno.rol_id == 2) {
+ 					alert("profesor")
+ 					Swal.fire({
+ 						title: 'Ingresando Profesor al sistema',
+ 						timerProgressBar: true,
+ 						showConfirmButton: false,
+ 						willOpen: async () => {
+ 							Swal.showLoading()
+
+ 							await axios.post("/index.php/Alumnos/createProfesor", {
+ 								alumno: this.alumno
+ 							}).then((res) => {
+
+ 								this.getAlumnos();
+ 								this.getRol();
+ 								this.getApoderado();
+ 								Swal.close();
+
+ 							});
+
+ 						}
+ 					})
+ 				}
+ 				if (this.alumno.rol_id == 3) {
+				
+ 					alert("apoderado")
+ 					Swal.fire({
+ 						title: 'Ingresando Apoderado al sistema',
+ 						timerProgressBar: true,
+ 						showConfirmButton: false,
+ 						willOpen: async () => {
+ 							Swal.showLoading()
+
+							 var edit = Object.assign({}, this.alumno)
+ 							await axios.post("/index.php/Alumnos/createApoderado", {alumno:edit
+ 							}).then((res) => {
+								this.getAlumnos();
+ 								this.getRol();
+ 								this.getApoderado();
+ 								this.limpiar();
+ 								Swal.close();
+
+ 							});
+
+ 						}
+ 					})
+ 				}
+ 				if (this.alumno.rol_id == 4) {
+ 					alert("gestor")
+ 					Swal.fire({
+
+ 						title: 'Ingresando Gesor dePlataforma al sistema',
+ 						timerProgressBar: true,
+ 						showConfirmButton: false,
+ 						willOpen: async () => {
+ 							Swal.showLoading()
+
+ 							await axios.post("/index.php/Alumnos/createGesor", {
+ 								alumno: this.alumno
+ 							}).then((res) => {
+
+ 								this.getAlumnos();
+ 								this.getRol();
+ 								this.getApoderado();
+ 								this.limpiar();
+ 								Swal.close();
+
+ 							});
+
+ 						}
+ 					})
+ 				} else {
+
+ 				}
  			},
 
  			updateAlumnos(row) {
@@ -251,23 +430,48 @@
 
  			},
  			limpiar() {
-
+ 				this.alumno.rut = "";
  				this.alumno.name = "";
- 				this.alumno.lastname = "";
+ 				this.alumno.lastname_p = "";
+ 				this.alumno.lastname_m = "";
  				this.alumno.email = "";
- 				this.alumno.phone1 = "";
- 				this.alumno.username = "";
- 				this.alumno.password = "";
- 				this.alumno.city = "";
+ 				this.alumno.phone = "";
  				this.alumno.address = "";
-
+ 				this.alumno.rol_id = "";
+ 				this.alumno.password = "";
+ 				this.alumno.commune = "";
+ 				this.alumno.course_id = "";
+ 				this.alumno.prioritary = "";
+ 				this.alumno.representative_id = "";
+ 				this.alumno.representative_supp_id = "";
+ 				this.alumno.contact_movil = "";
+ 			},
+ 			Filtro() {
+ 				axios.post("/index.php/Alumnos/getAlumnosByFilter", {
+ 					filtro: this.filtro
+ 				}).then((res) => {
+				
+ 					this.arrayAlumnos = res.data;
+					 if(this.arrayAlumnos== 0 ){
+						 alert("no hay datos se regargara el valor por defecto")
+						this.getAlumnos();
+					 }
+					 console.log(res.data);
+ 				});
  			}
 
  		},
+
+
  		created() {
  			this.getAlumnos();
+ 			this.getRol();
+ 			this.getApoderado();
 
  		},
+
+
+
  	});
  </script>
 
