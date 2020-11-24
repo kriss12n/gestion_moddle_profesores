@@ -40,7 +40,7 @@ class Alumnos extends CI_Controller
 		$Apoderado = $this->UsuarioModel->getApoderado();
 		echo json_encode($Apoderado);	
 	}
-
+// CREATES SEGUN ROL
 	public function createAlumnos()
 	{
 		$data = array(
@@ -128,33 +128,151 @@ class Alumnos extends CI_Controller
 
 		$this->UsuarioModel->createGesor($data);	
 	}
+//TERMINO CREATES SEGUN ROL
+//UPDATES SEGUN EL ROL 
+	public function updateA(){
+	
+		$id = $this->request->alumno->id;
 
+		$data = array(
+			"rut"=>$this->request->alumno->rut,
+			"name"=>$this->request->alumno->name,
+			"lastname_p"=>$this->request->alumno->lastname_p,
+			"lastname_m"=>$this->request->alumno->lastname_m,
+			"address"=>$this->request->alumno->address,
+			"rol_id"=>$this->request->alumno->rol_id,
+			"representative_id"=>$this->request->alumno->representative_id,
+			"representative_supp_id"=>$this->request->alumno->representative_supp_id,
+			"course_id"=>$this->request->alumno->course_id,
+			"prioritary"=>$this->request->alumno->prioritary,
+			"commune"=>$this->request->alumno->commune,
+			"contact_movil"=>$this->request->alumno->contact_movil,
+		);
 
+		$this->UsuarioModel->updateA($data,$id);	
+	
+	}
+	public function updateP(){
+		$id = $this->request->alumno->id;
+		if($this->request->alumno->passwordsecret ==""){
+			$data = array(
+				"rut"=>$this->request->alumno->rut,
+				"name"=>$this->request->alumno->name,
+				"lastname_p"=>$this->request->alumno->lastname_p,
+				"lastname_m"=>$this->request->alumno->lastname_m,
+				"email"=>$this->request->alumno->email,
+				"phone"=>$this->request->alumno->phone,
+				"contact_movil"=>$this->request->alumno->contact_movil,
+				"address"=>$this->request->alumno->address,
+				"rol_id"=>$this->request->alumno->rol_id,
+				"representative_id"=>$this->request->alumno->representative_id,
+				"representative_supp_id"=>$this->request->alumno->representative_supp_id,
+				"course_id"=>$this->request->alumno->course_id,
+				"prioritary"=>$this->request->alumno->prioritary,
+				"commune"=>$this->request->alumno->commune,
+			);
+		}else{
+			$data = array(
+				"rut"=>$this->request->alumno->rut,
+				"name"=>$this->request->alumno->name,
+				"lastname_p"=>$this->request->alumno->lastname_p,
+				"lastname_m"=>$this->request->alumno->lastname_m,
+				"email"=>$this->request->alumno->email,
+				"phone"=>$this->request->alumno->phone,
+				"contact_movil"=>$this->request->alumno->contact_movil,
+				"address"=>$this->request->alumno->address,
+				"rol_id"=>$this->request->alumno->rol_id,
+				"representative_id"=>$this->request->alumno->representative_id,
+				"representative_supp_id"=>$this->request->alumno->representative_supp_id,
+				"course_id"=>$this->request->alumno->course_id,
+				"prioritary"=>$this->request->alumno->prioritary,
+				"password"=>hash("sha256",$this->request->alumno->passwordsecret),
+				"commune"=>$this->request->alumno->commune,
+			);
+		}
+
+		$this->UsuarioModel->updateP($data,$id);		
+	}
+	public function updateAP(){
+		$id = $this->request->alumno->id;
+		$data = array(
+			"rut"=>$this->request->alumno->rut,
+			"name"=>$this->request->alumno->name,
+			"lastname_p"=>$this->request->alumno->lastname_p,
+			"lastname_m"=>$this->request->alumno->lastname_m,
+			"address"=>$this->request->alumno->address,
+			"rol_id"=>$this->request->alumno->rol_id,
+			"phone"=>$this->request->alumno->phone,
+			"representative_id"=>$this->request->alumno->representative_id,
+			"representative_supp_id"=>$this->request->alumno->representative_supp_id,
+			"course_id"=>$this->request->alumno->course_id,
+			"prioritary"=>$this->request->alumno->prioritary,
+			"commune"=>$this->request->alumno->commune,
+			"contact_movil"=>$this->request->alumno->contact_movil
+		);
+
+		$this->UsuarioModel->updateAP($data,$id);	
+	}
+	public function updateG(){
+		$id = $this->request->alumno->id;
+
+		if($this->request->alumno->passwordsecret ==""){
+			$data = array(
+				"rut"=>$this->request->alumno->rut,
+				"name"=>$this->request->alumno->name,
+				"lastname_p"=>$this->request->alumno->lastname_p,
+				"lastname_m"=>$this->request->alumno->lastname_m,
+				"email"=>$this->request->alumno->email,
+				"phone"=>$this->request->alumno->phone,
+				"contact_movil"=>$this->request->alumno->contact_movil,
+				"address"=>$this->request->alumno->address,
+				"rol_id"=>$this->request->alumno->rol_id,
+				"representative_id"=>$this->request->alumno->representative_id,
+				"representative_supp_id"=>$this->request->alumno->representative_supp_id,
+				"course_id"=>$this->request->alumno->course_id,
+				"prioritary"=>$this->request->alumno->prioritary,
+				"commune"=>$this->request->alumno->commune,
+			);
+		}else{
+			$data = array(
+				"rut"=>$this->request->alumno->rut,
+				"name"=>$this->request->alumno->name,
+				"lastname_p"=>$this->request->alumno->lastname_p,
+				"lastname_m"=>$this->request->alumno->lastname_m,
+				"email"=>$this->request->alumno->email,
+				"phone"=>$this->request->alumno->phone,
+				"contact_movil"=>$this->request->alumno->contact_movil,
+				"address"=>$this->request->alumno->address,
+				"rol_id"=>$this->request->alumno->rol_id,
+				"representative_id"=>$this->request->alumno->representative_id,
+				"representative_supp_id"=>$this->request->alumno->representative_supp_id,
+				"course_id"=>$this->request->alumno->course_id,
+				"prioritary"=>$this->request->alumno->prioritary,
+				"password"=>hash("sha256",$this->request->alumno->passwordsecret),
+				"commune"=>$this->request->alumno->commune,
+			);
+		}
+
+		$this->UsuarioModel->updateG($data,$id);	
+	}
+
+// TERMINO DE UPDATES SEGUN EL ROL
 
 
 	public function deleteAlumnos()
 	{
 
-		require_once(APPPATH . 'libraries/MoodleRest.php');
-		$MoodleRest = new MoodleRest();
-		$MoodleRest->setServerAddress("https://educacion.citizenapp.cl/webservice/rest/server.php");
-		$MoodleRest->setToken('5da89f5f2ca98b8f3d3582933c4d7095');
+		$id = $this->request->alumno;
 
-
-		$eliminarUser = array("userids" => array(
-			$this->request->alumno
-		));
-		
-		$return = $MoodleRest->request(
-			'core_user_delete_users',
-			$eliminarUser,
-			MoodleRest::METHOD_POST
-		);
-		print_r($return);
-	}
-	public function getAlumnosByFilter(){
-	     $role =	$this->request->filtro;
-		$filtro = $this->UsuarioModel->getAlumnosByFilter( $role );
-		echo json_encode($filtro);	
-	}
+		$this->UsuarioModel->deleteUsuario($id);
 }
+public function getAlumnosByFilter(){
+
+
+	$filtro = $this->UsuarioModel->getAlumnosByFilter($this->request->filtro);
+
+	echo json_encode($filtro);	
+}
+}
+
+
