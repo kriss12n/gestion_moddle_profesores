@@ -11,6 +11,7 @@ class Cursos extends CI_Controller
 		// load base_url
 		$this->load->helper('url');
 		$this->load->library('MoodleRest');
+		$this->load->model("CursosModel");
 		$this->request = json_decode(file_get_contents('php://input'));
 	}
 
@@ -23,53 +24,43 @@ class Cursos extends CI_Controller
 	}
 	public function created_courses()
 	{
-		require_once(APPPATH.'libraries/MoodleRest.php');
-		$MoodleRest = new MoodleRest();
-		$MoodleRest->setServerAddress("https://educacion.citizenapp.cl/webservice/rest/server.php");
-		$MoodleRest->setToken('5da89f5f2ca98b8f3d3582933c4d7095');
+		// require_once(APPPATH.'libraries/MoodleRest.php');
+		// $MoodleRest = new MoodleRest();
+		// $MoodleRest->setServerAddress("https://educacion.citizenapp.cl/webservice/rest/server.php");
+		// $MoodleRest->setToken('5da89f5f2ca98b8f3d3582933c4d7095');
 
-
-
-		$new_cursos = array("courses"=>array(	
-            array(	"fullname" =>$this->request->cursos->fullname,
-					"shortname" =>$this->request->cursos->shortname,
-					"summary" =>$this->request->cursos->summary,
-                	"categoryid" =>$this->request->cursos->categoryid,
-                	
-            )
-			)
+		$data =	array(	"name" =>$this->request->cursos->name,
+						"description" =>$this->request->cursos->description,
 		);	
 
-			$return = $MoodleRest->request(
-				'core_course_create_courses', 
-				$new_cursos, 
-				MoodleRest::METHOD_POST
-			);
+		$this->CursosModel->createCursos($data);			
 
-			echo json_encode($return);
+			
 	}
 
 	public function getcourses()
 	{
-		require_once(APPPATH . 'libraries/MoodleRest.php');
-		$MoodleRest = new MoodleRest();
-		$MoodleRest->setServerAddress("https://educacion.citizenapp.cl/webservice/rest/server.php");
-		$MoodleRest->setToken('5da89f5f2ca98b8f3d3582933c4d7095');
+		// require_once(APPPATH . 'libraries/MoodleRest.php');
+		// $MoodleRest = new MoodleRest();
+		// $MoodleRest->setServerAddress("https://educacion.citizenapp.cl/webservice/rest/server.php");
+		// $MoodleRest->setToken('5da89f5f2ca98b8f3d3582933c4d7095');
 
-		$courses = $MoodleRest->request(
-
-
-			'core_course_get_courses',
-			array(
-				"options" => array(
-					"ids" => array(),
-				)
-			),
-			MoodleRest::RETURN_JSON
-		);
+		// $courses = $MoodleRest->request(
 
 
-		echo json_encode($courses);
+		// 	'core_course_get_courses',
+		// 	array(
+		// 		"options" => array(
+		// 			"ids" => array(),
+		// 		)
+		// 	),
+		// 	MoodleRest::RETURN_JSON
+		// );
+
+		$cursos = $this->CursosModel->getCursos();
+
+
+		echo json_encode($cursos);
 	}
 
 	public function getcoursesByFilter(){

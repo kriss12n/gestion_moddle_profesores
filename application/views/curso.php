@@ -11,18 +11,12 @@
 						<form>
 							<div class="form-group">
 								<div class="form-group">
-									<label>Nombre Cursos</label>
-									<input v-model="cursos.fullname" type="text" class="form-control">
+									<label>Nombre Curso</label>
+									<input v-model="cursos.name" placeholder="ejemplo 1-B" type="text" class="form-control">
 									<label>Abreviación Curso </label>
-									<input v-model="cursos.shortname" type="text"  class="form-control"> </input>
-									<label>Descripcion Curso </label>
-									<textarea v-model="cursos.summary" type="text" style="min-height: 100px" class="form-control"> </textarea>
-									<label >Curso Visible</label>
-									<v-select placeholder="Seleccione una opcion" @input="" :options="visible" label="name" :reduce="categoria => categoria.id" v-model="cursos.visible" ></v-select>
-									<label>Categoria</label>
-									<v-select placeholder="Seleccione cursos" @input="" :options="arrayCategorias" label="name" :reduce="categoria => categoria.id" v-model="cursos.categoryid" ></v-select>
+									<textarea v-model="cursos.description" type="text" style="min-height: 100px" class="form-control"> </textarea>
 									<div class="mt-3 d-flex justify-content-end">
-										<button @click="createdCursos" class="button btn btn-success">Guardar Categoria</button>
+										<button @click="createdCursos($event)" class="button btn btn-success">Guardar Curso</button>
 									</div>
 								</div>
 							</div>
@@ -37,7 +31,7 @@
 				<div class="card">
 					<div class="card-body">
 					<p>Filtro de Cursos por area:</p>
-                        <v-select placeholder="Seleccione como filtrar  los cursos" @input="getByFiltro" :options="arrayCategorias" label="name" :reduce="categoria => categoria.id" v-model="filtro" ></v-select>
+                        <!-- <v-select placeholder="Seleccione como filtrar  los cursos" @input="getByFiltro" :options="arrayCategorias" label="name" :reduce="categoria => categoria.id" v-model="filtro" ></v-select> -->
 						<h5 class="card-title">Listado de Cursos</h5>
 						<v-client-table :columns="columns" v-model="arrayCursos" :options="options">
 						
@@ -63,27 +57,21 @@
         data() {
             return {
 				cursos:{
-					fullname:"",
-					shortname:"",
-					summary:"",
-					categoryid  :"",
-					visible:"1",
+					id:"",
+					name:"",
+					description: "",
 				},
-				visible:[
-					{id: '1', name: 'visible', },
-                    {id: '0', name: 'no visible',},	
-	 			],
 				arrayCursos:[],
 				arrayCategorias:[],
 				filtro:"",
-				columns: ['displayname', 'summary','shortname','summaryformat','format',"acciones"],
+				columns: ['name', 'description',"acciones"],
 				options: {
 				headings: {
-					displayname: 'Nombre Curso',
-					summary: 'Descripcion Curso',
-					acciones:"Acciones",
+					name: 'Nombre Curso',
+					description:  'Descripcion Curso',
+					acciones: "Acciones",
 				},
-				filterable: ['fullname' ],
+				filterable: ['name'],
 				texts: {
 					count: "Mostrando {from} a {to} de {count} resultados|{count} records|One record",
 					first: 'Primero',
@@ -103,27 +91,25 @@
             }
         },
         methods: {
-			createdCursos(){
+			createdCursos(e){
+                e.preventDefault();
 				if (this.cursos.fullname === ""|| this.cursos.shortname === "" || this.cursos.categoryid === "") {
 					Swal.fire({
 						icon: 'error',
-						title: 'Oops... prese que los campos estan sin datos',
+						title: 'Oops... todos los campos son obligatorios',
 						text: 'corrobora tu informacion',
-
 					})
-
 				} else {
-
-
-					axios.post("/index.php/Cursos/created_courses",{cursos:this.cursos}).then((res) => {
+					axios.post("/panel/index.php/Cursos/created_courses",{cursos:this.cursos}).then((res) => {
 
 						Swal.fire({
-  position: 'top-end',
-  icon: 'success',
-  title: 'Datos Guardados Correctamente',
-  showConfirmButton: false,
-  timer: 1500
-})
+							position: 'top-end',
+							icon: 'success',
+							title: 'Datos Guardados Correctamente',
+							showConfirmButton: false,
+							timer: 1500
+							});
+							this.limpiar();
 					});
 				}
 
@@ -131,8 +117,7 @@
 			
 			getCurso(){
 
-				
-			axios.post("/index.php/Cursos/getcourses").then((res)=>{
+			axios.get("/panel/index.php/Cursos/getcourses").then((res)=>{
 				
 				this.arrayCursos =  res.data;
 				console.log(this.arrayCursos);
@@ -141,23 +126,21 @@
 
 		 
 		},
-		 getCategoria(){
-			 axios.get("/index.php/Categoria/get_Categori").then((res)=>{
-				this.arrayCategorias = res.data;
-				console.log(this.arrayCategorias);
-			 });
-		 },
 		 getByFiltro(){
 			 axios.post("/index.php/Cursos/getcoursesByFilter",{filtro:this.filtro}).then((res)=>{
 
 				this.arrayCursos = res.data.courses;
 				console.log(this.arrayCursos);
 		 });
+		},
+		limpiar() {
+	
+			this.cursos.name = "";
+			this.cursos.description= "";
 		}
 		},
         created() {
         this.getCurso();
-		this.getCategoria();
         },
     });
 </script>

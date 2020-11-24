@@ -27,28 +27,22 @@
 		   </a>
 		   </li>
 
-
-		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/Cursos/index">
-			   <i class="icon icon-account_box light-green-text s-18"></i>
-			   <span>Cursos</span>
-		   </a>
-		   </li>
 		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/Notas/index">
 			   <i class="icon icon-account_box light-green-text s-18"></i>
 			   <span>Notas</span>
 		   </a>
 		   </li>
-			   <!-- <li class="treeview"><a href="#">
-                <i class="icon icon-account_box purple-text s-18"></i> <span>Asignar clientes</span> <i
+			   <li class="treeview"><a href="#">
+                <i class="icon icon-account_box purple-text s-18"></i> <span>Administracion de cursos</span> <i
                     class="icon icon-angle-left s-18 pull-right"></i>
             </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?= base_url() ?>index.php/usuario/asignacion_manual"><i class="icon icon-account_box purple-text s-18"></i>asignacion manual</a>
+                    <li><a href="<?= base_url() ?>index.php/Cursos/index"><i class="icon icon-account_box purple-text s-18"></i>Cursos</a>
                     </li>
-                    <li><a href="panel-page-dashboard1-rtl.html"><i class="icon icon-account_box purple-text s-18"></i>asignacion automatica</a>
+                    <li><a href="panel-page-dashboard1-rtl.html"><i class="icon icon-account_box purple-text s-18"></i>Asignaturas</a>
                     </li>
                 </ul>
-			</li> -->
+			</li>
                 </ul>
             </li>
 		</ul>
