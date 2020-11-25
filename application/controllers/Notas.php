@@ -10,6 +10,8 @@ class Notas extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->library('MoodleRest');
 		$this->request = json_decode(file_get_contents('php://input'));
+
+		$this->load->model("NotasModel");
 	  }
 
 	public function index()
@@ -19,28 +21,48 @@ class Notas extends CI_Controller {
 		$this->load->view('nav');
 		$this->load->view('notas');
 	}
-	
-
-	public function getnotas(){
-		require_once(APPPATH.'libraries/MoodleRest.php');
-		$MoodleRest = new MoodleRest();
-		$MoodleRest->setServerAddress("https://educacion.citizenapp.cl/webservice/rest/server.php");
-		$MoodleRest->setToken('5da89f5f2ca98b8f3d3582933c4d7095');
-	
-		$notas = $MoodleRest->request(
+	public function getNotas(){
 
 
-			'core_notes_get_course_notes',
-			array(
-				'courseid' => "5",
-			
-			),
-			MoodleRest::RETURN_JSON
-		);
-		
-
-
-	echo json_encode($notas);
+		$notas = $this->NotasModel->getNotas();
+		echo json_encode($notas);	
 	}
+
+	public function getEstuden(){
+
+
+		$estuden = $this->NotasModel->getEstuden();
+		echo json_encode($estuden);	
+	}
+	public function getProfe(){
+
+
+		$profes = $this->NotasModel->getProfe();
+		echo json_encode($profes);	
+	}
+	public function getSubject(){
+
+
+		$Subject = $this->NotasModel->getSubject($this->request->id);
+		echo json_encode($Subject);	
+	}
+
+	public function GuardarNota(){
+
+		$data = array(
+			"student_id"=>$this->request->notas->student_id,
+			"teacher_id"=>$this->request->notas->teacher_id,
+			"subject_id"=>$this->request->notas->subject_id,
+			"calification"=>$this->request->notas->nota,
+			"craeted_at"=>$this->request->notas->fecha,
+
+		);
+
+		$this->NotasModel->GuardarNota($data);		
+
+
+	}
+
+	
 
 }
