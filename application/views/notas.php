@@ -12,6 +12,15 @@
 									<div class="form-row">
 										<div class="form-group col-md-6">
 
+											<label>Selecciona Un Curso </label>
+											<v-select placeholder="Seleccione una opcion" @input="getEstuden()" :options="arrayCurso" label="name" :reduce="Cursoid => Cursoid.id" v-model="Cursoid"></v-select>
+										</div>
+
+									</div>
+
+									<div class="form-row">
+										<div class="form-group col-md-6">
+
 											<label>Selecciona Un Estudiante </label>
 											<v-select placeholder="Seleccione una opcion" @input="" :options="arrayEstuden" label="rut" :reduce="alumno => alumno" v-model="alumno"></v-select>
 										</div>
@@ -45,7 +54,7 @@
 										</div>
 
 									</div>
-									<div  v-if="arraySubject.length >= 1"  class="form-row">
+									<div v-if="arraySubject.length >= 1" class="form-row">
 										<div v-if="arraySubject && profe " class="form-group col-md-6">
 											<label>Ingresa la calificacion del Estudiante </label>
 											<input class="form-control" type="text" v-model="guardarN.nota">
@@ -143,12 +152,14 @@
 		data() {
 			return {
 				alumno: '',
+				Cursoid: "1",
 				profe: '',
 				asignatura: '',
 				arrayEstuden: [],
 				arrayProfes: [],
 				arraySubject: '',
 				arrayNotas: [],
+				arrayCurso: [],
 				editnota: {
 					id: "",
 					student_id: "",
@@ -194,7 +205,7 @@
 		methods: {
 			cargardatos(row) {
 
-			   	this.editnota.id = row.id,
+				this.editnota.id = row.id,
 					this.editnota.student_id = row.student_id,
 					this.editnota.nota = row.calification
 				console.log(this.editnota)
@@ -209,10 +220,22 @@
 				});
 
 			},
+			getCurso() {
+				axios.get("/index.php/Notas/getCurso").then((res) => {
+
+					this.arrayCurso = res.data;
+					console.log(this.arrayCurso);
+				});
+
+			},
 
 			getEstuden() {
 
-				axios.get("/index.php/Notas/getEstuden").then((res) => {
+				this.arrayEstuden = [];
+
+				axios.post("/index.php/Notas/getEstuden", {
+					id: this.Cursoid
+				}).then((res) => {
 
 					this.arrayEstuden = res.data;
 					console.log(this.arrayEstuden);
@@ -261,9 +284,11 @@
 
 		},
 		created() {
+			this.getCurso();
 			this.getNotas();
 			this.getEstuden();
 			this.getProfe();
+
 
 		},
 	});

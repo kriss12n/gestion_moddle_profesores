@@ -20,12 +20,20 @@ class NotasModel extends CI_Model
 		return $query->result();
 	}
 
-	public function getEstuden()
+	public function getEstuden($id)
 	{
 		$this->db->select("user.id,user.rut,user.name,user.lastname_p,user.lastname_m");
 		$this->db->from("user");
-		$this->db->where('rol_id',"1" );
-		
+		$this->db->where('course_id',$id);
+
+
+		$query = $this->db->get();
+		return $query->result();
+	}
+	public function getCurso()
+	{
+		$this->db->select("*");
+		$this->db->from("base_course");
 		$query = $this->db->get();
 		return $query->result();
 	}

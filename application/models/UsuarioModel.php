@@ -44,6 +44,13 @@ class UsuarioModel extends CI_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+	public function getCurso()
+	{
+		$this->db->select("*");
+		$this->db->from("base_course");
+		$query = $this->db->get();
+		return $query->result();
+	}
 	
 	public function getRol()
 	{

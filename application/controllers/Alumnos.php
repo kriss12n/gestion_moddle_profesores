@@ -24,6 +24,12 @@ class Alumnos extends CI_Controller
 		$this->load->view('nav');
 		$this->load->view('alumnos');
 	}
+	public function getCurso(){
+
+
+		$estuden = $this->NotasModel->getCurso();
+		echo json_encode($estuden);	
+	}
 	public function getAlumnos()
 	{
 		$users = $this->UsuarioModel->getUsuario();

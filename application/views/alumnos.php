@@ -37,9 +37,9 @@
 
  									<label>Dirección</label>
  									<input v-model="alumno.address" type="text" class="form-control">
-
+								
  									<label v-if="alumno.rol_id == 1">Curso</label>
- 									<input v-if="alumno.rol_id == 1" v-model="alumno.curso" type="text" class="form-control">
+									 <v-select v-if="alumno.rol_id == 1" placeholder="Seleccione Tipo de Prioridad" :options="arrayCurso" label="name" :reduce="Curso => Curso.id" v-model="alumno.course_id"></v-select>
 
  									<label v-if="alumno.rol_id == 1">Prioridad</label>
  									<v-select v-if="alumno.rol_id == 1" placeholder="Seleccione Tipo de Prioridad" :options="prioridad" label="name" :reduce="prioridad => prioridad.id" v-model="alumno.prioritary"></v-select>
@@ -322,7 +322,8 @@
  						name: 'En Tramite',
  					},
 
- 				],
+				 ],
+				 arrayCurso:[],
  				arrayAlumnos: [],
  				arrayApoderado: [],
  				arrayRol: [],
@@ -407,7 +408,15 @@
  					console.log(this.arrayAlumnos);
 
  				});
- 			},
+			 },
+			 getCurso() {
+				axios.get("/index.php/Notas/getCurso").then((res) => {
+
+					this.arrayCurso = res.data;
+					console.log(this.arrayCurso);
+				});
+
+			},
  			getRol() {
  				axios.post("/index.php/Alumnos/getRol").then((res) => {
 
@@ -700,6 +709,7 @@
 
 
  		created() {
+			 this.getCurso();
  			this.getAlumnos();
  			this.getRol();
  			this.getApoderado();
