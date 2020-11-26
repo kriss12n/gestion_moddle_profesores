@@ -20,22 +20,30 @@ class NotasModel extends CI_Model
 		return $query->result();
 	}
 
-	public function getEstuden($id)
+	public function getEstuden($id,$idasig)
 	{
-		$this->db->select("user.id,user.rut,user.name,user.lastname_p,user.lastname_m");
-		$this->db->from("user");
-		$this->db->where('course_id',$id);
+		$this->db->distinct();
+		$this->db->select ("u.name as namex,u.lastname_p as lastname_p,u.lastname_m as lastname_m,u.rut as rut, bc.name as name,u.id");
+		$this->db->from("base_course_subject");
+		$this->db->join('user as u', 'u.id = base_course_subject.student_id', 'Left');
+		$this->db->join('base_course as bc', 'bc.id = base_course_subject.base_course_id', 'inner');
+		$this->db->where('base_course_subject.base_course_id',$id);
+		$this->db->where('base_course_subject.subject_id',$idasig);
 
 
 		$query = $this->db->get();
 		return $query->result();
 	}
-	public function getCurso()
+	public function getCurso($id)
 	{
-		$this->db->select("*");
-		$this->db->from("base_course");
+		$this->db->distinct();
+		$this->db->select ("base_course_subject.base_course_id, bc.name as name");
+		$this->db->from("base_course_subject");
+		$this->db->join('base_course as bc', 'bc.id = base_course_subject.base_course_id', 'inner');
+		$this->db->where('subject_id ', $id);//1
 		$query = $this->db->get();
 		return $query->result();
+	
 	}
 
 	public function getProfe()

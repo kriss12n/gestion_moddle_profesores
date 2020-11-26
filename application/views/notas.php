@@ -9,28 +9,7 @@
 						<form>
 							<div class="form-group">
 								<div class=" form-group">
-									<div class="form-row">
-										<div class="form-group col-md-6">
-
-											<label>Selecciona Un Curso </label>
-											<v-select placeholder="Seleccione una opcion" @input="getEstuden()" :options="arrayCurso" label="name" :reduce="Cursoid => Cursoid.id" v-model="Cursoid"></v-select>
-										</div>
-
-									</div>
-
-									<div class="form-row">
-										<div class="form-group col-md-6">
-
-											<label>Selecciona Un Estudiante </label>
-											<v-select placeholder="Seleccione una opcion" @input="" :options="arrayEstuden" label="rut" :reduce="alumno => alumno" v-model="alumno"></v-select>
-										</div>
-										<div v-if="alumno" class="form-group col-md-6">
-											<fieldset disabled>
-												<label for=""></label>
-												<input type="text" class="form-control" v-model="alumno.name +' ' +alumno.lastname_p+' ' +alumno.lastname_m">
-											</fieldset>
-										</div>
-									</div>
+						
 
 									<div class="form-row">
 										<div class="form-group col-md-6">
@@ -50,9 +29,31 @@
 										<div v-if="arraySubject && profe " class="form-group col-md-6">
 
 											<label v-if="arraySubject.length >= 1">Selecciona Una Asignatura </label>
-											<v-select v-if="arraySubject.length >= 1" placeholder="Seleccione cursos" :options="arraySubject" label="Asig" :reduce="asignatura => asignatura" v-model="asignatura"></v-select>
+											<v-select v-if="arraySubject.length >= 1" placeholder="Seleccione cursos" @input="getCurso()" :options="arraySubject" label="Asig" :reduce="asignatura => asignatura" v-model="asignatura"></v-select>
 										</div>
 
+									</div>
+									<div v-if="asignatura" class="form-row">
+										<div class="form-group col-md-6">
+
+											<label>Selecciona Un Curso </label>
+											<v-select placeholder="Seleccione una opcion" @input="getEstuden()" :options="arrayCurso" label="name" :reduce="Cursoid => Cursoid.base_course_id" v-model="Cursoid"></v-select>
+										</div>
+
+									</div>
+
+									<div v-if="Cursoid && asignatura " class="form-row">
+										<div class="form-group col-md-6">
+
+											<label>Selecciona Un Estudiante </label>
+											<v-select placeholder="Seleccione una opcion" @input="" :options="arrayEstuden" label="rut" :reduce="alumno => alumno" v-model="alumno"></v-select>
+										</div>
+										<div v-if="alumno" class="form-group col-md-6">
+											<fieldset disabled>
+												<label for=""></label>
+												<input type="text" class="form-control" v-model="alumno.namex +' ' +alumno.lastname_p+' ' +alumno.lastname_m">
+											</fieldset>
+										</div>
 									</div>
 									<div v-if="arraySubject.length >= 1" class="form-row">
 										<div v-if="arraySubject && profe " class="form-group col-md-6">
@@ -221,7 +222,9 @@
 
 			},
 			getCurso() {
-				axios.get("/index.php/Notas/getCurso").then((res) => {
+				this.Cursoid="";
+				this.arrayCurso =[];
+				axios.post("/index.php/Notas/getCurso",{curso:this.asignatura.subject_id}).then((res) => {
 
 					this.arrayCurso = res.data;
 					console.log(this.arrayCurso);
@@ -234,7 +237,7 @@
 				this.arrayEstuden = [];
 
 				axios.post("/index.php/Notas/getEstuden", {
-					id: this.Cursoid
+					id: this.Cursoid, idasig: this.asignatura.subject_id
 				}).then((res) => {
 
 					this.arrayEstuden = res.data;
@@ -284,7 +287,6 @@
 
 		},
 		created() {
-			this.getCurso();
 			this.getNotas();
 			this.getEstuden();
 			this.getProfe();
