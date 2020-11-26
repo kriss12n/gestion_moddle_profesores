@@ -171,7 +171,8 @@
 					teacher_id: "",
 					subject_id: "",
 					nota: "",
-					fecha: ""
+					fecha: "",
+					cursoid:""
 				},
 				columns: ['id', 'rut', 'nombre', 'apellidoP', 'apellidoM', 'calification', 'asig', 'craeted_at', "acciones"],
 				options: {
@@ -270,6 +271,8 @@
 				this.guardarN.student_id = this.alumno.id,
 					this.guardarN.teacher_id = this.profe.id,
 					this.guardarN.subject_id = this.asignatura.subject_id,
+					this.guardarN.cursoid = this.Cursoid,
+					
 
 					axios.post("/index.php/Notas/GuardarNota", {
 						notas: this.guardarN
