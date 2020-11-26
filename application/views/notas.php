@@ -9,7 +9,7 @@
 						<form>
 							<div class="form-group">
 								<div class=" form-group">
-						
+
 
 									<div class="form-row">
 										<div class="form-group col-md-6">
@@ -140,6 +140,29 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="col-12 mt-2 mb-2">
+				<div class="card">
+					<div class="card-body">
+						<p>Filtro de Notas</p>
+
+						<h5 class="card-title">Listado de Notas</h5>
+
+						<div  class="form-row">
+							<div class="form-group col-md-6">
+
+								<label>Selecciona Un Curso </label>
+								<v-select placeholder="Seleccione una opcion" @input="" :options="arraytNotasFiltro" label="nombrecurso" :reduce="curss => curss.subject_id" v-model="filtroCur.cursoid"></v-select>
+								
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -156,6 +179,11 @@
 				Cursoid: "1",
 				profe: '',
 				asignatura: '',
+				arraytNotasFiltro:[],
+				filtroCur:{
+					cursoid:""
+
+				},
 				arrayEstuden: [],
 				arrayProfes: [],
 				arraySubject: '',
@@ -172,7 +200,7 @@
 					subject_id: "",
 					nota: "",
 					fecha: "",
-					cursoid:""
+					cursoid: ""
 				},
 				columns: ['id', 'rut', 'nombre', 'apellidoP', 'apellidoM', 'calification', 'asig', 'craeted_at', "acciones"],
 				options: {
@@ -222,10 +250,21 @@
 				});
 
 			},
+			getNotasFiltro() {
+
+				axios.get("/index.php/Notas/getNotasFiltro").then((res) => {
+
+					this.arraytNotasFiltro = res.data;
+					console.log(this.arraytNotasFiltro);
+				});
+
+			},
 			getCurso() {
-				this.Cursoid="";
-				this.arrayCurso =[];
-				axios.post("/index.php/Notas/getCurso",{curso:this.asignatura.subject_id}).then((res) => {
+				this.Cursoid = "";
+				this.arrayCurso = [];
+				axios.post("/index.php/Notas/getCurso", {
+					curso: this.asignatura.subject_id
+				}).then((res) => {
 
 					this.arrayCurso = res.data;
 					console.log(this.arrayCurso);
@@ -238,7 +277,8 @@
 				this.arrayEstuden = [];
 
 				axios.post("/index.php/Notas/getEstuden", {
-					id: this.Cursoid, idasig: this.asignatura.subject_id
+					id: this.Cursoid,
+					idasig: this.asignatura.subject_id
 				}).then((res) => {
 
 					this.arrayEstuden = res.data;
@@ -268,18 +308,40 @@
 				});
 			},
 			GuardarNota() {
-				this.guardarN.student_id = this.alumno.id,
-					this.guardarN.teacher_id = this.profe.id,
-					this.guardarN.subject_id = this.asignatura.subject_id,
-					this.guardarN.cursoid = this.Cursoid,
-					
 
-					axios.post("/index.php/Notas/GuardarNota", {
-						notas: this.guardarN
-					}).then((res) => {
+				if (this.alumno.id && this.profe.id && this.asignatura.subject_id && this.Cursoid && this.guardarN.nota) {
+
+					Swal.fire({
+						title: 'Guardando Nota',
+						timerProgressBar: true,
+						showConfirmButton: false,
+						willOpen: async () => {
+							Swal.showLoading()
+
+							this.guardarN.student_id = this.alumno.id,
+								this.guardarN.teacher_id = this.profe.id,
+								this.guardarN.subject_id = this.asignatura.subject_id,
+								this.guardarN.cursoid = this.Cursoid,
 
 
-					});
+								await axios.post("/index.php/Notas/GuardarNota", {
+									notas: this.guardarN
+								}).then((res) => {
+									Swal.close();
+
+
+								});
+
+						}
+					})
+
+				} else {
+					alert("faltan datos")
+
+				}
+
+
+
 
 
 			},
@@ -291,9 +353,8 @@
 		},
 		created() {
 			this.getNotas();
-			this.getEstuden();
 			this.getProfe();
-
+            this.getNotasFiltro();
 
 		},
 	});

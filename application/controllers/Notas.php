@@ -39,6 +39,13 @@ class Notas extends CI_Controller {
 		$estuden = $this->NotasModel->getCurso($this->request->curso);
 		echo json_encode($estuden);	
 	}
+	public function getNotasFiltro(){
+
+		$estuden = $this->NotasModel->getNotasFiltro();
+		echo json_encode($estuden);	
+	}
+
+	
 	public function getProfe(){
 
 

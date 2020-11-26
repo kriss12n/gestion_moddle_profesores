@@ -46,6 +46,25 @@ class NotasModel extends CI_Model
 	
 	}
 
+	public function getNotasFiltro()
+	{
+	
+		$this->db->select("bc.name as nombrecurso, s.name as asigt, u.name as nombre,u.rut as rut ,u.lastname_p as apellidoP 
+		,u.lastname_m as apellidoM, califications.id, califications.calification, califications.craeted_at,califications.student_id,califications.subject_id,califications.calification");
+				$this->db->group_by('califications.course_id');
+		$this->db->order_by('califications.course_id', 'asc');  # or desc
+		$this->db->from("califications");
+
+		$this->db->join('user as u', 'u.id = califications.student_id', 'inner');
+		$this->db->join('subject as s', 's.id = califications.subject_id', 'inner');
+		$this->db->join(' base_course as bc', 'bc.id = califications.course_id', 'inner' );
+	
+
+		$query = $this->db->get();
+		return $query->result();
+	
+	}
+
 	public function getProfe()
 	{
 		$this->db->select("user.id,user.rut,user.name,user.lastname_p,user.lastname_m");
