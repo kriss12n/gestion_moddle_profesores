@@ -63,6 +63,27 @@ class Cursos extends CI_Controller
 		echo json_encode($cursos);
 	}
 
+	public function update_courses(){
+
+		$id = $this->request->cursos->id;
+
+		$data =	array(	
+			"name" =>$this->request->cursos->name,
+			"description" =>$this->request->cursos->description,
+		);	
+
+		$this->CursosModel->updateCursos($data,$id);
+
+
+	}
+
+	public function delete_courses(){
+
+		$id = $this->request->cursos->id;
+		$this->CursosModel->deleteCursos($id);
+
+
+	}
 	public function getcoursesByFilter(){
 
 	

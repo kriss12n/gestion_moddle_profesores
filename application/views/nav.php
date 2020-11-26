@@ -20,7 +20,6 @@
 		   </a>
 		   </li>
 
-
 		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/Categoria/index">
 			   <i class="icon icon-account_box light-green-text s-18"></i>
 			   <span>Categoria</span>
@@ -28,7 +27,7 @@
 		   </li>
 
 		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/Notas/index">
-			   <i class="icon icon-account_box light-green-text s-18"></i>
+			   <i class="icon icon-note-text light-green-text s-18"></i>
 			   <span>Notas</span>
 		   </a>
 		   </li>
@@ -39,7 +38,7 @@
                 <ul class="treeview-menu">
                     <li><a href="<?= base_url() ?>index.php/Cursos/index"><i class="icon icon-account_box purple-text s-18"></i>Cursos</a>
                     </li>
-                    <li><a href="panel-page-dashboard1-rtl.html"><i class="icon icon-account_box purple-text s-18"></i>Asignaturas</a>
+                    <li><a href="<?= base_url() ?>index.php/Asignatura/index"><i class="icon icon-account_box purple-text s-18"></i>Asignaturas</a>
                     </li>
                 </ul>
 			</li>

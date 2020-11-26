@@ -24,6 +24,21 @@ class CursosModel extends CI_Model {
 
 	}
 
+	public function updateCursos($data,$id){
+
+		$this->db->where("id",$id);
+		$query = $this->db->update("base_course",$data);
+		return true;
+
+	}
+
+	public function deleteCursos($id){
+
+		$this->db->where("id",$id);
+		$query = $this->db->delete("base_course");
+		return true;
+	}
+
 	public function deleteUsuario($id){
 
 		$this->db->where("id",$id);
