@@ -45,7 +45,22 @@ class Notas extends CI_Controller {
 		echo json_encode($estuden);	
 	}
 
-	
+	public function getFiltroasignatura(){
+
+		$estuden = $this->NotasModel->getFiltroasignatura($this->request->filtroasig);
+		echo json_encode($estuden);	
+	}
+
+	public function getFiltroestuden(){
+
+		$estudenx = $this->NotasModel->getFiltroestuden($this->request->filtroasig ,$this->request->filtrocurso);
+		echo json_encode($estudenx);	
+	}
+	public function getFiltroNOTAS(){
+
+		$estudenx = $this->NotasModel->getFiltroNOTAS($this->request->filtroasig ,$this->request->filtrocurso,$this->request->filtroestuden);
+		echo json_encode($estudenx);	
+	}
 	public function getProfe(){
 
 

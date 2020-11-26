@@ -149,14 +149,54 @@
 
 						<h5 class="card-title">Listado de Notas</h5>
 
-						<div  class="form-row">
-							<div class="form-group col-md-6">
+						<div class="form-row">
+							<div class="form-group col-md-3">
 
 								<label>Selecciona Un Curso </label>
-								<v-select placeholder="Seleccione una opcion" @input="" :options="arraytNotasFiltro" label="nombrecurso" :reduce="curss => curss.subject_id" v-model="filtroCur.cursoid"></v-select>
-								
+								<v-select placeholder="Seleccione una opcion" @input="getFiltroasignatura()" :options="arraytNotasFiltro" label="nombrecurso" :reduce="curss => curss.idcourse" v-model="filtroCur.cursoid"></v-select>
+
 
 							</div>
+							<div v-if="filtroCur.cursoid" class="form-group col-md-3">
+
+								<label>Selecciona Una Asignatura </label>
+								<v-select placeholder="Seleccione una opcion" @input="getFiltroestuden()" :options="arraytFiltroasignatura" label="asigt" :reduce="asigx => asigx.subject_id" v-model="filtroCur.subject_id"></v-select>
+
+
+							</div>
+							<div v-if="filtroCur.subject_id" class="form-group col-md-3">
+
+								<label>Selecciona Un Estudiante </label>
+								<v-select placeholder="Seleccione una opcion" @input="getFiltroNOTAS()" :options="arraytFiltroalumn" label="rut" :reduce="curss => curss.student_id" v-model="filtroCur.alumnoid"></v-select>
+
+
+							</div>
+
+
+						</div>
+						<h1>holaaaaaaaaaaaaaa</h1>
+						<div v-for="value in arrayFiltroNOTAS">
+
+							<h1>{{value.rut}}</h1>
+							<h1>{{value.asig}}</h1>
+							<h1>{{value.calification}}</h1>
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>{{value.asig}}</th>
+										<th>Lastname</th>
+										<th>Email</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>John</td>
+										<td>Doe</td>
+										<td>{{value.calification}}</td>
+									</tr>
+									
+								</tbody>
+							</table>
 
 						</div>
 					</div>
@@ -179,9 +219,14 @@
 				Cursoid: "1",
 				profe: '',
 				asignatura: '',
-				arraytNotasFiltro:[],
-				filtroCur:{
-					cursoid:""
+				arraytNotasFiltro: [],
+				arraytFiltroasignatura: [],
+				arrayFiltroNOTAS: [],
+				arraytFiltroalumn: [],
+				filtroCur: {
+					cursoid: "",
+					subject_id: "",
+					alumnoid: ""
 
 				},
 				arrayEstuden: [],
@@ -259,6 +304,47 @@
 				});
 
 			},
+			getFiltroasignatura() {
+
+
+				axios.post("/index.php/Notas/getFiltroasignatura", {
+					filtroasig: this.filtroCur.cursoid
+				}).then((res) => {
+
+					this.arraytFiltroasignatura = res.data;
+					console.log(this.arraytFiltroasignatura);
+				});
+
+			},
+			getFiltroestuden() {
+
+
+				axios.post("/index.php/Notas/getFiltroestuden", {
+					filtroasig: this.filtroCur.subject_id,
+					filtrocurso: this.filtroCur.cursoid
+				}).then((res) => {
+					console.log(res.data);
+					this.arraytFiltroalumn = res.data;
+					console.log(this.arraytFiltroalumn);
+				});
+
+			},
+			getFiltroNOTAS() {
+
+
+				axios.post("/index.php/Notas/getFiltroNOTAS", {
+					filtroasig: this.filtroCur.subject_id,
+					filtrocurso: this.filtroCur.cursoid,
+					filtroestuden: this.filtroCur.alumnoid
+				}).then((res) => {
+					console.log(res.data);
+					this.arrayFiltroNOTAS = res.data;
+					console.log(this.arrayFiltroNOTAS);
+				});
+
+			},
+
+
 			getCurso() {
 				this.Cursoid = "";
 				this.arrayCurso = [];
@@ -354,7 +440,7 @@
 		created() {
 			this.getNotas();
 			this.getProfe();
-            this.getNotasFiltro();
+			this.getNotasFiltro();
 
 		},
 	});
