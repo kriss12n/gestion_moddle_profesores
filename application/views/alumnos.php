@@ -134,11 +134,11 @@
  												</tr>
  												<tr v-if="value.rol_id==1">
  													<th scope="row">Representante: </th>
- 													<td> {{ value.representative_id}}</td>
+ 													<td> {{ value.pepe}} {{value.apellidop}} {{value.lastnamem}}</td>
  												</tr>
  												<tr v-if="value.rol_id==1">
  													<th scope="row">Representante Suplete: </th>
- 													<td> {{ value.representative_supp_id}}</td>
+ 													<td> {{ value.pepe2}} {{value.apellidop2}} {{value.lastnamem2}}</td>
  												</tr>
 
  												<tr v-if="value.rol_id==1">

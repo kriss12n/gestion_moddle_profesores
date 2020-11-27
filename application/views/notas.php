@@ -84,68 +84,6 @@
 
 	
 
-		<div class="row">
-			<div class="col-12 mt-2 mb-2">
-				<div class="card">
-					<div class="card-body">
-						<p>Filtro de Notas</p>
-
-						<h5 class="card-title">Listado de Notas</h5>
-
-						<div class="form-row">
-							<div class="form-group col-md-3">
-
-								<label>Selecciona Un Curso </label>
-								<v-select placeholder="Seleccione una opcion" @input="getFiltroasignatura()" :options="arraytNotasFiltro" label="nombrecurso" :reduce="curss => curss.idcourse" v-model="filtroCur.cursoid"></v-select>
-
-
-							</div>
-							<div v-if="filtroCur.cursoid" class="form-group col-md-3">
-
-								<label>Selecciona Una Asignatura </label>
-								<v-select placeholder="Seleccione una opcion" @input="getFiltroestuden()" :options="arraytFiltroasignatura" label="asigt" :reduce="asigx => asigx.subject_id" v-model="filtroCur.subject_id"></v-select>
-
-
-							</div>
-							<div v-if="filtroCur.subject_id" class="form-group col-md-3">
-
-								<label>Selecciona Un Estudiante </label>
-								<v-select placeholder="Seleccione una opcion" @input="getFiltroNOTAS()" :options="arraytFiltroalumn" label="rut" :reduce="curss => curss.student_id" v-model="filtroCur.alumnoid"></v-select>
-
-
-							</div>
-
-
-						</div>
-						<h1>holaaaaaaaaaaaaaa</h1>
-						<div v-for="value in arrayFiltroNOTAS">
-
-							<h1>{{value.rut}}</h1>
-							<h1>{{value.asig}}</h1>
-							<h1>{{value.calification}}</h1>
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th>{{value.asig}}</th>
-										<th>Lastname</th>
-										<th>Email</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>John</td>
-										<td>Doe</td>
-										<td>{{value.calification}}</td>
-									</tr>
-									
-								</tbody>
-							</table>
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 	</div>
 </div>
 
