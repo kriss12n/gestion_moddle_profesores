@@ -156,21 +156,19 @@ class NotasModel extends CI_Model
 
 	public function getFiltroNOTAS($filtroasig,$filtrocurso,$filtroestuden)
 	{
-		$this->db->distinct();
-		$this->db->select("s.name as asig, u.name as nombre,u.rut as rut ,u.lastname_p as apellidoP 
-		,u.lastname_m as apellidoM, califications.id, califications.calification, califications.craeted_at,califications.student_id,califications.subject_id,califications.calification");
+		// s.name as asig, u.name as nombre,u.rut as rut ,u.lastname_p as apellidoP 
+		// ,u.lastname_m as apellidoM, califications.id, califications.calification, califications.craeted_at,califications.student_id,califications.subject_id,califications.calification");
+		$this->db->select("*");
 		$this->db->from("califications");
-		$this->db->join('user as u', 'u.id = califications.student_id', 'Left');
-		$this->db->join('subject as s', 's.id = califications.subject_id', 'inner');
-		$this->db->join(' base_course as bc', 'bc.id = califications.course_id', 'inner' );
+		// $this->db->join('user as u', 'u.id = califications.student_id', 'inner');
+		// $this->db->join('subject as s', 's.id = califications.subject_id', 'inner');
+		// $this->db->join(' base_course as bc', 'bc.id = califications.course_id', 'inner' );
 		$this->db->where('califications.course_id',$filtrocurso);
-		$this->db->where('califications.subject_id',$filtroasig);
+		// $this->db->where('califications.subject_id',$filtroasig);
 		$this->db->where('califications.student_id',$filtroestuden);
-		$this->db->group_by('califications.calification');
-		$this->db->order_by('califications.id', 'asc');  # or desc
 		$query = $this->db->get();
 		return $query->result();
-	
+		
 	}
 	public function getFiltroNOTASVER($filtrocurso,$filtroestuden)
 	{

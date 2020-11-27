@@ -22,6 +22,13 @@ class Cursos extends CI_Controller
 		$this->load->view('nav');
 		$this->load->view('curso');
 	}
+		public function mi_curso()
+	{
+		$this->load->view('header');
+		$this->load->view('topmenu');
+		$this->load->view('nav');
+		$this->load->view('mi_curso');
+	}
 	public function created_courses()
 	{
 		// require_once(APPPATH.'libraries/MoodleRest.php');
@@ -111,4 +118,32 @@ class Cursos extends CI_Controller
 
 	}
 
+	public function getStudentsByTeacherChief(){
+
+		$id = $this->request->teacher;
+		$students = $this->CursosModel->getStudentsByTeacherChief($id);
+		echo json_encode($students);
+	}
+
+	public function getCalificationsByStudent(){
+
+		$id = $this->request->student;
+		$subjects = $this->CursosModel->getSubjectsByStudent($id);
+		$calificationsSubjects = array();
+
+		foreach ($subjects as $asignatura) {
+
+			 $calificationsSubjects[] =array(
+				 "subject" => $asignatura->name,
+				 "califications" => $this->CursosModel->getCalificationsBySubjectAndStudent($asignatura->id,$id));
+		
+		}
+
+		// print_r($calificationsSubjects[0]["califications"]);
+
+
+		
+		echo json_encode($calificationsSubjects);
+
+	}
 }
