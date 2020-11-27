@@ -26,10 +26,27 @@
 		   </a>
 		   </li>
 
-		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/Notas/index">
-			   <i class="icon icon-notebook-list2 light-green-text s-18"></i>
-			   <span>Notas</span>
+		   <li class="treeview no-b"><a >
+			   <i class="icon icon-note-text light-green-text s-18"></i>
+			   <span>Administracion de Notas</span>
+			   <i
+                    class="icon icon-angle-left s-18 pull-right"></i>
+			   
 		   </a>
+		   <ul class="treeview-menu">
+                    <li><a href="<?= base_url() ?>index.php/Notas/index"><i class="icon icon-note-text light-green-text s-18"></i>Crear Notas</a>
+                    </li>
+                    <li><a href="<?= base_url() ?>index.php/Notas/notastodas"><i class="icon icon-note-text light-green-text s-18"></i>Todas Las Notas</a>
+					</li>
+					<li><a href="<?= base_url() ?>index.php/Notas/notascurso"><i class="icon icon-note-text light-green-text s-18"></i>Optener Notas Curso</a>
+					</li>
+					<li><a href="<?= base_url() ?>index.php/Notas/notascursoasignatura"><i class="icon icon-note-text light-green-text s-18"></i>Notas Curso Asignatura</a>
+					</li>
+					<li><a href="<?= base_url() ?>index.php/Notas/notascursoasignaturastuden"><i class="icon icon-note-text light-green-text s-18"></i>Notas Curso Asignatura Estudiante</a>
+					<li><a href="<?= base_url() ?>index.php/Notas/notascursoestudiante"><i class="icon icon-note-text light-green-text s-18"></i>Notas Curso Estudiante</a>
+                    </li>
+                    </li>
+                </ul>
 		   </li>
 		   	<li class="treeview no-b"><a href="<?= base_url() ?>index.php/Cursos/mi_curso">
 			   <i class="icon icon-business_center light-green-text s-18"></i>

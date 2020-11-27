@@ -72,8 +72,8 @@
 
  						<div v-for="value in arrayAlumnos">
  							<div class="modal fade" :id="['Vermas' + value.id]" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
- 								<div class="modal-dialog" role="document">
- 									<div class="modal-content">
+ 								<div class="modal-dialog " role="document">
+ 									<div class="modal-content ">
  										<div class="modal-header">
  											<h5 class="modal-title" id="exampleModalLabel">{{ value.name}} {{ value.lastname_p}}</h5>
  											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -133,16 +133,19 @@
  													<td> {{ value.rol}}</td>
  												</tr>
  												<tr v-if="value.rol_id==1">
- 													<th scope="row">Representante: </th>
- 													<td> {{ value.representative_id}}</td>
+													 <th scope="row">Representante: </th>
+													 <td> </td>
+ 													<td> {{ value.pepe}} {{value.apellidop}} {{value.lastnamem}}</td>
  												</tr>
  												<tr v-if="value.rol_id==1">
- 													<th scope="row">Representante Suplete: </th>
- 													<td> {{ value.representative_supp_id}}</td>
+													 <th scope="row">Representante Suplete: </th>
+													 <td> </td>
+ 													<td> {{ value.pepe2}} {{value.apellidop2}} {{value.lastnamem2}}</td>
  												</tr>
 
  												<tr v-if="value.rol_id==1">
- 													<th scope="row">Curso Actual: </th>
+													 <th scope="row">Curso Actual: </th>
+													 <td> </td>
  													<td> {{ value.course_id}}</td>
  												</tr>
  											</table>
