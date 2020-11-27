@@ -39,35 +39,38 @@ class CursosModel extends CI_Model {
 		return true;
 	}
 
-	public function deleteUsuario($id){
-
-		$this->db->where("id",$id);
-		$query = $this->db->delete("usuario");
-
-	}
-
-	public function getKam(){
-
-		$this->db->where("id_tipo_usuario",2);
-		$query = $this->db->get("usuario");
-
-		return $query->result();
-
-	}
-
-	public function updateUserWithPassword($data,$id){
-
-		$this->db->where("id",$id);
-		$query = $this->db->update("usuario",$data);
-		return true;
-
-	}
-
 	public function updateUserWithoutPassword($data,$id){
 		$this->db->where("id",$id);
 		$query = $this->db->update("usuario",$data);
 		return true;
 	}
 
+	public function getStudentsByTeacherChief($id){
+
+		$query =	$this->db->query('SELECT * FROM user WHERE id IN 
+		(SELECT student_id FROM group_user WHERE group_id =
+		(SELECT group_id FROM planilla WHERE teacher_id = '.$id.'))
+		ORDER BY user.lastname_p ASC
+		');
+		return $query->result();
+
+	}
+
+	public function getSubjectsByStudent($id){
+
+		$query =	$this->db->query('SELECT id,name FROM subject where id IN (
+			SELECT subject_id FROM califications where student_id = '.$id.')');
+
+		return $query->result();
+
+	}
+
+	public function getCalificationsBySubjectAndStudent($id,$student){
+
+		$query= $this->db->query('SELECT id,calification FROM califications WHERE subject_id ='.$id.'  AND student_id = '.$student.'');
+	
+		return $query->result();
+
+	}
 	
 }

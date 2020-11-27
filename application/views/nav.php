@@ -27,8 +27,13 @@
 		   </li>
 
 		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/Notas/index">
-			   <i class="icon icon-note-text light-green-text s-18"></i>
+			   <i class="icon icon-notebook-list2 light-green-text s-18"></i>
 			   <span>Notas</span>
+		   </a>
+		   </li>
+		   	<li class="treeview no-b"><a href="<?= base_url() ?>index.php/Cursos/mi_curso">
+			   <i class="icon icon-business_center light-green-text s-18"></i>
+			   <span>Mi curso</span>
 		   </a>
 		   </li>
 			   <li class="treeview"><a href="#">

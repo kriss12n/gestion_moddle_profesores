@@ -175,30 +175,12 @@
 
 						</div>
 						<h1>holaaaaaaaaaaaaaa</h1>
-						<div v-for="value in arrayFiltroNOTAS">
+						<!-- <div v-for="value in arrayFiltroNOTAS">
 
 							<h1>{{value.rut}}</h1>
 							<h1>{{value.asig}}</h1>
 							<h1>{{value.calification}}</h1>
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th>{{value.asig}}</th>
-										<th>Lastname</th>
-										<th>Email</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>John</td>
-										<td>Doe</td>
-										<td>{{value.calification}}</td>
-									</tr>
-									
-								</tbody>
-							</table>
-
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
