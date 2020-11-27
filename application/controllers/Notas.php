@@ -21,6 +21,39 @@ class Notas extends CI_Controller {
 		$this->load->view('nav');
 		$this->load->view('notas');
 	}
+	public function notastodas()
+	{	
+		$this->load->view('header');
+		$this->load->view('topmenu');
+		$this->load->view('nav');
+		$this->load->view('notastodas');
+	}
+	public function notascurso()
+	{	
+		$this->load->view('header');
+		$this->load->view('topmenu');
+		$this->load->view('nav');
+		$this->load->view('notascurso');
+	}
+	public function notascursoasignatura(){	
+		$this->load->view('header');
+		$this->load->view('topmenu');
+		$this->load->view('nav');
+		$this->load->view('notascursoasignatura');
+	}
+	public function notascursoasignaturastuden(){	
+		$this->load->view('header');
+		$this->load->view('topmenu');
+		$this->load->view('nav');
+		$this->load->view('notascursoasignaturastuden');
+	}
+	public function notascursoestudiante(){	
+		$this->load->view('header');
+		$this->load->view('topmenu');
+		$this->load->view('nav');
+		$this->load->view('notascursoestudiante');
+	}
+	
 	public function getNotas(){
 
 
@@ -50,15 +83,41 @@ class Notas extends CI_Controller {
 		$estuden = $this->NotasModel->getFiltroasignatura($this->request->filtroasig);
 		echo json_encode($estuden);	
 	}
+	public function getFiltroasignaturaver(){
+
+		$estuden = $this->NotasModel->getFiltroasignaturaver($this->request->filtroasig);
+		echo json_encode($estuden);	
+	}
 
 	public function getFiltroestuden(){
 
 		$estudenx = $this->NotasModel->getFiltroestuden($this->request->filtroasig ,$this->request->filtrocurso);
 		echo json_encode($estudenx);	
 	}
+	public function getFiltroestudenverx(){
+
+		$estudenx = $this->NotasModel->getFiltroestudenverx($this->request->filtrocurso);
+		echo json_encode($estudenx);	
+	}
+	
+	public function getFiltroestudenvert(){
+
+		$estudenx = $this->NotasModel->getFiltroestudenvert($this->request->filtrocurso);
+		echo json_encode($estudenx);	
+	}
+	public function getFiltroestudenver(){
+
+		$estudenx = $this->NotasModel->getFiltroestudenver($this->request->filtroasig ,$this->request->filtrocurso);
+		echo json_encode($estudenx);	
+	}
 	public function getFiltroNOTAS(){
 
 		$estudenx = $this->NotasModel->getFiltroNOTAS($this->request->filtroasig ,$this->request->filtrocurso,$this->request->filtroestuden);
+		echo json_encode($estudenx);	
+	}
+	public function getFiltroNOTASVER(){
+
+		$estudenx = $this->NotasModel->getFiltroNOTASVER($this->request->filtrocurso,$this->request->filtroestuden);
 		echo json_encode($estudenx);	
 	}
 	public function getProfe(){
