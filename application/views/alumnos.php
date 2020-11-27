@@ -39,7 +39,7 @@
  									<input v-model="alumno.address" type="text" class="form-control">
 								
  									<label v-if="alumno.rol_id == 1">Curso</label>
-									 <v-select v-if="alumno.rol_id == 1" placeholder="Seleccione Tipo de Prioridad" :options="arrayCurso" label="name" :reduce="Curso => Curso.id" v-model="alumno.course_id"></v-select>
+									 <v-select v-if="alumno.rol_id == 1" placeholder="Seleccione Tipo de Prioridad" :options="arrayCurso" label="name" :reduce="Cursox => Cursox.id" v-model="alumno.course_id"></v-select>
 
  									<label v-if="alumno.rol_id == 1">Prioridad</label>
  									<v-select v-if="alumno.rol_id == 1" placeholder="Seleccione Tipo de Prioridad" :options="prioridad" label="name" :reduce="prioridad => prioridad.id" v-model="alumno.prioritary"></v-select>
@@ -146,7 +146,7 @@
  												<tr v-if="value.rol_id==1">
 													 <th scope="row">Curso Actual: </th>
 													 <td> </td>
- 													<td> {{ value.course_id}}</td>
+ 													<td> {{ value.course_idr}}</td>
  												</tr>
  											</table>
 
@@ -160,8 +160,8 @@
  							</div>
 
  						</div>
- 						<div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
- 							<div class="modal-dialog modal-lg" role="document">
+ 						<div class="modal fade" id="Edit" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ 							<div class="modal-dialog modal-lg"  role="document">
  								<div class="modal-content">
  									<div class="modal-header">
  										<h5 class="modal-title" id="exampleModalLabel">Estas editando a </h5>
@@ -208,7 +208,7 @@
  											<div class="form-group">
  												<div class="form-group col-md-12">
  													<label>Rol</label>
- 													<v-select placeholder="Seleccione como filtrar  los cursos" @input=" " :options="arrayRol" label="name" :reduce="Rol => Rol.id" v-model="valor.rol_id"></v-select>
+ 													<v-select placeholder="Seleccione como filtrar  los cursos"  :options="arrayRol" label="name" :reduce="Rol => Rol.id" v-model="valor.rol_id"></v-select>
  												</div>
  											</div>
 
@@ -247,7 +247,8 @@
  											<div class="form-row" v-if="valor.rol_id == 1" class="form-group">
  												<div class="form-group col-md-6">
  													<label>Curso</label>
- 													<input v-model="valor.course_id" type="text" class="form-control">
+													 <v-select placeholder="Seleccione Tipo de Curso" :options="arrayCurso" label="name" :reduce="cd => cd.id" v-model="valor.course_id"></v-select>
+													 
  												</div>
 
  												<div class="form-group col-md-6">
@@ -413,7 +414,7 @@
  				});
 			 },
 			 getCurso() {
-				axios.get("/index.php/Notas/getCurso").then((res) => {
+				axios.get("/index.php/Alumnos/getCurso").then((res) => {
 
 					this.arrayCurso = res.data;
 					console.log(this.arrayCurso);

@@ -54,7 +54,7 @@
 
 
 									<div class="mt-3 d-flex justify-content-end">
-										<button @click="Guardarestudenasig()" class="button btn btn-success">Guardar Categoria</button>
+										<button @click="Guardarestudenasig($event)" class="button btn btn-success">Guardar Categoria</button>
 									</div>
 								</div>
 							</div>
@@ -64,99 +64,172 @@
 			</div>
 		</div>
 
+		<div class="row">
+			<div class="col-12 mt-2 mb-2">
+				<div class="card">
+					<div class="card-body">
+						<div class="form-group col-md-12">
+
+
+							<v-client-table :columns="columns" v-model="arrayRamos" :options="options">
+
+								<div slot="acciones" slot-scope="{row}">
+									<button data-toggle="modal" data-target="#Edit" @click="cargardatos(row)" class="btn btn-info"> Editar </button>
+								</div>
+							</v-client-table>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
 	</div>
-</div>
 
 
 
 
-<script>
-	Vue.use(VueTables.ClientTable);
-	Vue.component('v-select', VueSelect.VueSelect)
-	const agregarasignatura = new Vue({
-		el: "#agregarasignatura",
-		data() {
-			return {
-				arrayAlumnos: [],
-				arraySubject: [],
-				arrayNivel: [],
-				alumno: '',
-				subject: '',
-				nivel: {
-					description: ''
+	<script>
+		Vue.use(VueTables.ClientTable);
+		Vue.component('v-select', VueSelect.VueSelect)
+		const agregarasignatura = new Vue({
+			el: "#agregarasignatura",
+			data() {
+				return {
+					arrayAlumnos: [],
+					arraySubject: [],
+					arrayNivel: [],
+					arrayRamos:[],
+					alumno: '',
+					subject: '',
+					nivel: {
+						description: ''
+					},
+					guardar: {
+						base_course_id: "",
+						subject_id: "",
+						student_id: "",
+						level_id: "null"
+
+					},
+					columns: ['rut', 'nombre', 'apellidoP', 'apellidoM', 'basename', 'asig', 'namelevel', "acciones"],
+				options: {
+					headings: {
+						apellidoP: 'Apellido Paterno',
+						apellidoM: 'Apellido materno',
+						basename: 'Curso Base',
+						asig: 'Asignatura',
+						namelevel: 'Estado Actual',
+						acciones: "Acciones",
+					},
+					filterable: ['id', 'rut', 'nombre', 'apellidoP'],
+					texts: {
+						count: "Mostrando {from} a {to} de {count} resultados|{count} records|One record",
+						first: 'Primero',
+						last: 'Ultimo',
+						filter: "Filtro:",
+						filterPlaceholder: "Buscar",
+						limit: "Resultados:",
+						page: "Pagina:",
+						noResults: "No se encontraron resultados",
+						filterBy: "Filtrado por {column}",
+						loading: 'Cargando...',
+						defaultOption: 'Seleccionado {column}',
+						columns: 'Columnas'
+					},
 				},
-				guardar:{
-					base_course_id:"",
-					subject_id:"",
-					student_id:"",
-					level_id:""
-                 
+
+
+
+				}
+			},
+
+			methods: {
+				getRamos() {
+
+					axios.get("/index.php/AgregarAsignaura/getRamos").then((res) => {
+
+						this.arrayRamos = res.data;
+						console.log(this.arrayRamos);
+					});
+
+				},
+				getAlumnos() {
+					axios.get("/index.php/AgregarAsignaura/getAlumnos").then((res) => {
+						this.arrayAlumnos = [];
+						this.arrayAlumnos = res.data;
+						console.log(this.arrayAlumnos);
+
+					});
+				},
+				getSubject() {
+
+					this.arrayNivel = [];
+					axios.get("/index.php/AgregarAsignaura/getSubject").then((res) => {
+						this.arraySubject = [];
+						this.arraySubject = res.data;
+						console.log(this.arraySubject);
+
+					});
+				},
+				getNivel() {
+
+					axios.post("/index.php/AgregarAsignaura/getNivel", {
+						nivel: this.subject
+					}).then((res) => {
+
+						this.arrayNivel = res.data;
+						console.log(this.arrayNivel);
+
+					})
+				},
+
+				Guardarestudenasig(e) {
+					e.preventDefault();
+
+					this.guardar.base_course_id = this.alumno.idcor,
+						this.guardar.subject_id = this.subject.id,
+						this.guardar.student_id = this.alumno.id,
+						this.guardar.level_id = this.nivel.id
+
+					axios.post("/index.php/AgregarAsignaura/verificar", {
+						verificar: this.guardar
+					}).then((res) => {
+
+						var dato = res.data;
+
+						if (this.guardar.base_course_id && this.guardar.subject_id && this.guardar.student_id) {
+							if (dato.length == 0) {
+								axios.post("/index.php/AgregarAsignaura/Guardarestudenasig", {
+									nivel: this.guardar
+								}).then((res) => {
+									this.getRamos();
+								})
+							} else {
+								alert("repetido");
+
+							}
+						} else {
+							alert("Error faltan datos ");
+						}
+
+					})
+
 				}
 
-
-
-			}
-		},
-
-		methods: {
-			getAlumnos() {
-				axios.get("/index.php/AgregarAsignaura/getAlumnos").then((res) => {
-					this.arrayAlumnos = [];
-					this.arrayAlumnos = res.data;
-					console.log(this.arrayAlumnos);
-
-				});
 			},
-			getSubject() {
+			created() {
+               this.getRamos();
+				this.getAlumnos();
+				this.getSubject();
 
-				this.arrayNivel = [];
-				axios.get("/index.php/AgregarAsignaura/getSubject").then((res) => {
-					this.arraySubject = [];
-					this.arraySubject = res.data;
-					console.log(this.arraySubject);
 
-				});
 			},
-			getNivel() {
-
-				axios.post("/index.php/AgregarAsignaura/getNivel", {
-					nivel: this.subject
-				}).then((res) => {
-
-					this.arrayNivel = res.data;
-					console.log(this.arrayNivel);
-
-				})
-			},
-			Guardarestudenasig() {
-			
-					this.guardar.base_course_id= this.alumno.idcor,
-					this.guardar.subject_id= this.subject.id,
-					this.guardar.student_id=this.alumno.id,
-					this.guardar.level_id= this.nivel.id,
-
-					console.log(this.guardar)
-           
-				axios.post("/index.php/AgregarAsignaura/Guardarestudenasig", {
-					nivel: this.subject
-				}).then((res) => {
-
-					this.arrayNivel = res.data;
-					console.log(this.arrayNivel);
-
-				})
-			}
-
-		},
-		created() {
-			this.getAlumnos();
-			this.getSubject();
-
-		},
-	});
-</script>
+		});
+	</script>
 
 
-</body>
+	</body>
 
-</html>
+	</html>

@@ -27,7 +27,7 @@ class Alumnos extends CI_Controller
 	public function getCurso(){
 
 
-		$estuden = $this->NotasModel->getCurso();
+		$estuden = $this->UsuarioModel->getCurso();
 		echo json_encode($estuden);	
 	}
 	public function getAlumnos()

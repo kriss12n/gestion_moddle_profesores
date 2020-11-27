@@ -41,6 +41,35 @@ class AregarasignaturaModel extends CI_Model {
 		$query = $this->db->get();
 		return $query->result();
 	}
+	public function verificar($base_course_id,$student_id,$subject_id)
+	{
+		$this->db->select("*");
+		$this->db->from("base_course_subject");
+		$this->db->where('base_course_subject.base_course_id',$base_course_id);
+		$this->db->where('base_course_subject.student_id',$student_id);
+		$this->db->where('base_course_subject.subject_id',$subject_id);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	public function getRamos()
+	{
+
+		$this->db->select("s.name as asig, u.name as nombre,u.rut as rut ,u.lastname_p as apellidoP 
+		,u.lastname_m as apellidoM, bc.name as basename, l.name as namelevel  ");
+				$this->db->from("base_course_subject");
+		$this->db->join('user as u', 'u.id = base_course_subject.student_id', 'Left');
+		$this->db->join('subject as s', 's.id = base_course_subject.subject_id', 'Left');
+		$this->db->join('level as l', 'l.id = base_course_subject.level_id', 'Left');
+		$this->db->join(' base_course as bc', 'bc.id = base_course_subject.base_course_id', 'Left' );
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function Guardarestudenasig($data)
+	{
+		$query = $this->db->insert('base_course_subject',$data);  
+		return true;
+	}
 	
 	
 }
