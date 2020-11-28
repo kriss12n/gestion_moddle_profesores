@@ -24,6 +24,19 @@
 			   <i class="icon icon-account_box light-green-text s-18"></i>
 			   <span>Categoria</span>
 		   </a>
+		   
+		   </li>
+		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/Group/index">
+			   <i class="icon icon-account_box light-green-text s-18"></i>
+			   <span>Crear Grupo</span>
+		   </a>
+		   
+		   </li>
+		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/GroupEstudent/index">
+			   <i class="icon icon-account_box light-green-text s-18"></i>
+			   <span>Asignar Estudiantes Al Grupo</span>
+		   </a>
+		   
 		   </li>
 		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/AgregarAsignaura/index">
 			   <i class="icon icon-account_box light-green-text s-18"></i>
