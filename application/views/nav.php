@@ -49,6 +49,12 @@
 			   <span>Agreagr Ramos Estudiante</span>
 		   </a>
 		   </li>
+		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/ProfesorAsignatura/index">
+			   <i class="icon icon-account_box light-green-text s-18"></i>
+			   <span>Asignar Ramos Profesor</span>
+		   </a>
+		   
+		   </li>
 
 		   <li class="treeview no-b"><a >
 			   <i class="icon icon-note-text light-green-text s-18"></i>
