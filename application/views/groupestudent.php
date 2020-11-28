@@ -47,39 +47,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="Edit">Estas editando </h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<form>
 
-
-							<div class="form-group">
-								<label>Nombre Grupo</label>
-								<input v-model="edit.name" type="text" class="form-control">
-								<label>Descripcion Grupo </label>
-								<textarea v-model="edit.description" type="text" style="min-height: 100px" class="form-control"> </textarea>
-
-							</div>
-
-							<div class="mt-3 d-flex justify-content-end">
-								<button @click="EditarGroup($event)" class="button btn btn-success">Editar Grupo</button>
-							</div>
-						</form>
-
-					</div>
-					<div class="modal-footer">
-
-					</div>
-				</div>
-			</div>
-		</div>
 
 		<div class="row">
 			<div class="col-12 mt-2 mb-2">

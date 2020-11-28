@@ -32,6 +32,12 @@
 		   </a>
 		   
 		   </li>
+		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/Plantilla/index">
+			   <i class="icon icon-account_box light-green-text s-18"></i>
+			   <span>Asignar Profesor jefe Grupo</span>
+		   </a>
+		   
+		   </li>
 		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/GroupEstudent/index">
 			   <i class="icon icon-account_box light-green-text s-18"></i>
 			   <span>Asignar Estudiantes Al Grupo</span>
