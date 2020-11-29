@@ -27,8 +27,9 @@
 											</div>
 
 
+
 											<div class="mt-3 d-flex justify-content-end">
-												<button @click="EditarNota" class="button btn btn-success">Editar Nota</button>
+												<button @click="EditarNota()" class="button btn btn-success">Editar Nota</button>
 											</div>
 										</form>
 
@@ -121,7 +122,7 @@
 		methods: {
 			cargardatos(row) {
 
-				this.editnota.id = row.id,
+				    this.editnota.id = row.id,
 					this.editnota.student_id = row.student_id,
 					this.editnota.nota = row.calification
 				console.log(this.editnota)
@@ -149,6 +150,15 @@
 
 			},
 			EditarNota() {
+				 
+				axios.post("/index.php/Notas/EditarNota", {
+					editnota: this.editnota
+				}).then((res) => {
+
+					this.getNotasFiltro();
+					$("#Edit").modal("hide");
+					console.log(this.arraytNotasFiltro);
+				});
 
 			}
 
