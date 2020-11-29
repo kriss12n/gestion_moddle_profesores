@@ -104,6 +104,7 @@
 					alumno: '',
 					subject: '',
 					nivel: {
+					
 						description: ''
 					},
 					guardar: {
@@ -188,10 +189,18 @@
 				Guardarestudenasig(e) {
 					e.preventDefault();
 
-					this.guardar.base_course_id = this.alumno.idcor,
+					if(this.nivel){
+						this.guardar.base_course_id = this.alumno.idcor,
 						this.guardar.subject_id = this.subject.id,
 						this.guardar.student_id = this.alumno.id,
-						this.guardar.level_id = this.nivel.id
+							this.guardar.level_id = this.nivel.id
+					}else{
+						this.guardar.base_course_id = this.alumno.idcor,
+						this.guardar.subject_id = this.subject.id,
+						this.guardar.student_id = this.alumno.id
+					
+					}
+				
 
 					axios.post("/index.php/AgregarAsignaura/verificar", {
 						verificar: this.guardar
@@ -205,6 +214,13 @@
 									nivel: this.guardar
 								}).then((res) => {
 									this.getRamos();
+									Swal.fire({
+							position: 'top-end',
+							icon: 'success',
+							title: 'Datos Guardados Correctamente',
+							showConfirmButton: false,
+							timer: 1500
+							});
 								})
 							} else {
 								alert("repetido");
