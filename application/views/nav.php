@@ -22,7 +22,7 @@
 
 		   <li class="treeview no-b"><a href="<?= base_url() ?>index.php/Categoria/index">
 			   <i class="icon icon-account_box light-green-text s-18"></i>
-			   <span>Categoria</span>
+			   <span>Asignatura</span>
 		   </a>
 		   
 		   </li>
