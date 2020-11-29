@@ -142,6 +142,7 @@ class Notas extends CI_Controller {
 			"calification"=>$this->request->notas->nota,
 			"craeted_at"=>$this->request->notas->fecha,
 			"course_id"=>$this->request->notas->cursoid,
+			"semestre"=>$this->request->notas->semestre,
 
 		);
 

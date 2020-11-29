@@ -179,6 +179,9 @@
 			},
 			cargaredit(row) {
 
+                 this.edit.id  =  row.id
+				 this.edit.name = row.name
+				 this.edit.description 	= row.description
 			},
 			limpiar() {
 				this.group = [];

@@ -55,6 +55,15 @@
 											</fieldset>
 										</div>
 									</div>
+									<div v-if="Cursoid && asignatura " class="form-row">
+										<div class="form-group col-md-6">
+
+											<label>Selecciona Un Semestre </label>
+											<v-select placeholder="Seleccione una opcion" @input="" :options="semestre" label="name" :reduce="semestre => semestre.name" v-model="semname"></v-select>
+										</div>
+
+									</div>
+
 									<div v-if="arraySubject.length >= 1" class="form-row">
 										<div v-if="arraySubject && profe " class="form-group col-md-6">
 											<label>Ingresa la calificacion del Estudiante </label>
@@ -106,6 +115,18 @@
 		el: "#notas",
 		data() {
 			return {
+				semestre: [{
+ 						id: '0',
+ 						name: 'Primer Semestre',
+ 					},
+ 					{
+ 						id: '1',
+ 						name: 'Segundo Semestre',
+ 					}
+
+
+				 ],
+				 semname:"",
 				alumno: '',
 				Cursoid: "1",
 				profe: '',
@@ -131,7 +152,8 @@
 					subject_id: "",
 					nota: "",
 					fecha: "",
-					cursoid: ""
+					cursoid: "",
+					semestre:""
 				},
 
 
@@ -254,7 +276,7 @@
 			},
 			GuardarNota() {
 
-				if (this.alumno.id && this.profe.id && this.asignatura.subject_id && this.Cursoid && this.guardarN.nota) {
+				if (this.alumno.id && this.profe.id && this.asignatura.subject_id && this.Cursoid && this.guardarN.nota&&this.semname) {
 
 					Swal.fire({
 						title: 'Guardando Nota',
@@ -263,11 +285,11 @@
 						willOpen: async () => {
 							Swal.showLoading()
 
-							this.guardarN.student_id = this.alumno.id,
+						    	this.guardarN.student_id = this.alumno.id,
 								this.guardarN.teacher_id = this.profe.id,
 								this.guardarN.subject_id = this.asignatura.subject_id,
 								this.guardarN.cursoid = this.Cursoid,
-
+								this.guardarN.semestre = this.semname,
 
 								await axios.post("/index.php/Notas/GuardarNota", {
 									notas: this.guardarN

@@ -269,14 +269,10 @@
 
 				} else {
 
-					axios.post("/index.php/Plantilla/verificar", {
-						verificar: this.edit
-					}).then((res) => {
-
-						var dato = res.data;
+				
 
 						if (this.edit.group_id && this.edit.base_course_id && this.edit.teacher_id && this.edit.year) {
-							if (dato.length == 0) {
+						
 
 							
 										axios.post("/index.php/Plantilla/verificar3", {
@@ -307,19 +303,11 @@
 
 										})
 
-									
-							
-
-
-							} else {
-								alert("ya esta Ingresado esa informacion");
-
-							}
 						} else {
 							alert("Error faltan datos ");
 						}
 
-					})
+				
 
 				}
 
