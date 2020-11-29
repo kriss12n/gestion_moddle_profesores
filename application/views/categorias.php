@@ -17,7 +17,7 @@
 
 
 									<div class="mt-3 d-flex justify-content-end">
-										<button @click="editar" class="button btn btn-success">Guardar Asignatura</button>
+										<button @click="createdCategori()" class="button btn btn-success">Guardar Asignatura</button>
 									</div>
 								</div>
 							</div>
@@ -135,6 +135,7 @@
 			},
 
 			createdCategori() {
+				
 				if (this.categoria.name === "" || this.categoria.description === "" || this.categoria.sige === "") {
 					Swal.fire({
 						icon: 'error',
