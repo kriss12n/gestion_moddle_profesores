@@ -65,6 +65,13 @@ class AgregarAsignaura extends CI_Controller {
 
 		$this->AregarasignaturaModel->Guardarestudenasig($data);		
 	}
+	public function eliminar()
+	{
+	            $id =   $this->request->id ;
+	
+
+		$this->AregarasignaturaModel->eliminar($id);		
+	}
 	public function verificar(){
 		$users = $this->AregarasignaturaModel->verificar($this->request->verificar->base_course_id, $this->request->verificar->student_id, $this->request->verificar->subject_id);
 		echo json_encode($users);		

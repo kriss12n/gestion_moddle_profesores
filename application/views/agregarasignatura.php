@@ -74,7 +74,7 @@
 							<v-client-table :columns="columns" v-model="arrayRamos" :options="options">
 
 								<div slot="acciones" slot-scope="{row}">
-									<button data-toggle="modal" data-target="#Edit" @click="cargardatos(row)" class="btn btn-info"> Editar </button>
+								<button class="btn btn-danger" v-on:click="eliminar(row)"> Eliminar</button>
 								</div>
 							</v-client-table>
 
@@ -216,9 +216,42 @@
 
 					})
 
+				},
+				eliminar(row){
+					
+					
+				Swal.fire({
+					title: `Estas seguro de eliminar  ${row.nombre}  ${row.apellidoP} ${row.apellidoM} de la asignatura ${row.asig} `,
+					text: "Una vez eliminado no se podra recuperar",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes, delete it!'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						Swal.fire(
+							'Deleted!',
+							'Your file has been deleted.',
+							'success'
+
+
+						)
+						axios.post("/index.php/AgregarAsignaura/eliminar", {
+							id: row.id
+						}).then((res) => {
+
+							this.getRamos();
+						});
+
+
+					}
+				})
 				}
 
 			},
+			
+			
 			created() {
                this.getRamos();
 				this.getAlumnos();

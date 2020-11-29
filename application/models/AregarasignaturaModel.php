@@ -55,7 +55,7 @@ class AregarasignaturaModel extends CI_Model {
 	{
 
 		$this->db->select("s.name as asig, u.name as nombre,u.rut as rut ,u.lastname_p as apellidoP 
-		,u.lastname_m as apellidoM, bc.name as basename, l.name as namelevel  ");
+		,u.lastname_m as apellidoM, bc.name as basename, l.name as namelevel ,base_course_subject.id");
 				$this->db->from("base_course_subject");
 		$this->db->join('user as u', 'u.id = base_course_subject.student_id', 'Left');
 		$this->db->join('subject as s', 's.id = base_course_subject.subject_id', 'Left');
@@ -70,6 +70,12 @@ class AregarasignaturaModel extends CI_Model {
 		$query = $this->db->insert('base_course_subject',$data);  
 		return true;
 	}
-	
+
+		public function eliminar($id)
+	{
+
+		$this->db->where("id", $id);
+		$query = $this->db->delete("base_course_subject");
+	}
 	
 }
