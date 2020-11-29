@@ -11,7 +11,6 @@
 	<!-- CSS  -->
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/app.css">
 	<link rel="stylesheet" href="https://unpkg.com/vue-select@latest/dist/vue-select.css">
-
 	<!-- JS -->
 	<script src='<?php echo base_url()?>assets/js/app.js'></script>
 	<script src='<?php echo base_url()?>assets/js/vue.min.js'></script>
@@ -19,6 +18,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue-tables-2@2.1.46/dist/vue-tables-2.min.js"></script>
 	<script src="https://unpkg.com/vue-select@latest"></script>
+	<script src ="https://unpkg.com/vue-html-to-paper/build/vue-html-to-paper.js"></script>
+ 
     <title>SGI</title>
 </head>
 
