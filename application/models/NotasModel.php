@@ -12,10 +12,21 @@ class NotasModel extends CI_Model
 	public function getNotas()
 	{
 		$this->db->select("s.name as asig, u.name as nombre,u.rut as rut ,u.lastname_p as apellidoP 
-		,u.lastname_m as apellidoM, califications.id, califications.calification, califications.craeted_at,califications.student_id,califications.subject_id,califications.calification");
+		,u.lastname_m as apellidoM, califications.id, califications.calification, califications.craeted_at,califications.student_id,califications.subject_id,califications.calification,califications.semestre ");
 		$this->db->from("califications");
 		$this->db->join('user as u', 'u.id = califications.student_id', 'Left');
 		$this->db->join('subject as s', 's.id = califications.subject_id', 'Left');
+		$query = $this->db->get();
+		return $query->result();
+	}
+	public function semestre($sem)
+	{
+		$this->db->select("s.name as asig, u.name as nombre,u.rut as rut ,u.lastname_p as apellidoP 
+		,u.lastname_m as apellidoM, califications.id, califications.calification, califications.craeted_at,califications.student_id,califications.subject_id,califications.calification,califications.semestre ");
+		$this->db->from("califications");
+		$this->db->join('user as u', 'u.id = califications.student_id', 'Left');
+		$this->db->join('subject as s', 's.id = califications.subject_id', 'Left');
+		$this->db->where('califications.semestre',$sem);
 		$query = $this->db->get();
 		return $query->result();
 	}

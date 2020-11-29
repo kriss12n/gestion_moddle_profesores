@@ -6,6 +6,7 @@
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Listado de Categorias</h5>
+
 						<div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							<div class="modal-dialog modal-lg" role="document">
 								<div class="modal-content">
@@ -43,8 +44,11 @@
 							<div class="col-12 mt-2 mb-2">
 								<div class="card">
 									<div class="card-body">
-										<p>Filtro de Cursos por area:</p>
+										<label>Selecciona Un Semestre</label>
+										<v-select @input="getSem()" placeholder="Seleccione Semestre a Filtrar" :options="semestre" label="name" :reduce="sem => sem.name" v-model="sem"></v-select>
 
+										<br>
+										<br>
 										<h5 class="card-title">Listado de Cursos</h5>
 
 										<v-client-table :columns="columns" v-model="arrayNotas" :options="options">
@@ -68,18 +72,31 @@
 
 <script>
 	Vue.use(VueTables.ClientTable);
+	Vue.component('v-select', VueSelect.VueSelect)
 	const notastodas = new Vue({
 		el: "#notastodas",
 		data() {
-			return {		
-				arrayNotas: [],		
+			return {
+				arrayNotas: [],
 				arrayEstuden: [],
+				semestre: [{
+						id: '0',
+						name: 'Primer Semestre',
+					},
+					{
+						id: '1',
+						name: 'Segundo Semestre',
+					}
+
+
+				],
+				sem: "",
 				editnota: {
 					id: "",
 					student_id: "",
 					nota: "",
 				},
-				columns: ['id', 'rut', 'nombre', 'apellidoP', 'apellidoM', 'calification', 'asig', 'craeted_at', "acciones"],
+				columns: ['id', 'rut', 'nombre', 'apellidoP', 'apellidoM', 'calification', 'semestre', 'asig', 'craeted_at', "acciones"],
 				options: {
 					headings: {
 						apellidoP: 'Apellido Paterno',
@@ -115,7 +132,7 @@
 			},
 
 			getNotas() {
-
+				this.arrayNotas=[];
 				axios.get("/index.php/Notas/getNotas").then((res) => {
 
 					this.arrayNotas = res.data;
@@ -123,10 +140,29 @@
 				});
 
 			},
-			EditarNota(){
+			EditarNota() {
+				alert("click")
+			},
+			getSem() {
+
+				axios.post("/index.php/Notas/semestre", {
+					sem: this.sem
+				}).then((res) => {
+	this.arrayNotas = res.data;
+					if (this.arrayNotas ==0) {
+				
+						this.getNotas();
+					} else {
+
+					
+						console.log(this.arrayNotas);
+
+					}
+				});
+
 
 			}
-			
+
 
 
 		},

@@ -60,6 +60,13 @@ class Notas extends CI_Controller {
 		$notas = $this->NotasModel->getNotas();
 		echo json_encode($notas);	
 	}
+	public function semestre(){
+
+
+		$notas = $this->NotasModel->semestre($this->request->sem);
+		echo json_encode($notas);	
+	}
+	
 
 	public function getEstuden(){
 
