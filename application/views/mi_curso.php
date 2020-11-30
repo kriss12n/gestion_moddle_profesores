@@ -56,10 +56,10 @@
 				</div>
 			</div>
 		</div>
-			<!-- Modal Editar -->
+			<!-- Modal Informe de notas -->
 				<div class="modal fade"  data-backdrop="static" id="informe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-xl" id="printableTable">
-					<div class="modal-content">
+					<di class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">Informe de notas de "alumno"</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -151,7 +151,6 @@
 									<br>
 									<br>
 									<br>
-									<br>
 									<div class="d-flex row justify-content-around">
 										<div class="col-4">
 											<hr class="w-100 color-black">
@@ -168,14 +167,10 @@
 							</div>
 						</div>
 					</div>
-					</div>
-					
+					</di>
 				</div>
 				<Button>imprimir</Button>
-				</div>
-
-
-
+			</div>
 	</div>
 </div>
 
@@ -259,7 +254,6 @@
 					});
 			},
 			print () {
-			// Pass the element id here
 			this.$htmlToPaper('printMe');
     }
   		},

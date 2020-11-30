@@ -38,8 +38,9 @@
  									<label>Dirección</label>
  									<input v-model="alumno.address" type="text" class="form-control">
 								
- 									<label v-if="alumno.rol_id == 1">Curso</label>
-									 <v-select v-if="alumno.rol_id == 1" placeholder="Seleccione Tipo de Prioridad" :options="arrayCurso" label="name" :reduce="Cursox => Cursox.id" v-model="alumno.course_id"></v-select>
+ 									<label v-if="alumno.rol_id == 1">Fecha de nacimiento</label>
+									<!-- <v-select v-if="alumno.rol_id == 1" placeholder="Seleccione Tipo de Prioridad" :options="arrayCurso" label="name" :reduce="Cursox => Cursox.id" v-model="alumno.course_id"></v-select> -->
+ 									<input v-model="alumno.birthday" type="date" class="form-control">
 
  									<label v-if="alumno.rol_id == 1">Prioridad</label>
  									<v-select v-if="alumno.rol_id == 1" placeholder="Seleccione Tipo de Prioridad" :options="prioridad" label="name" :reduce="prioridad => prioridad.id" v-model="alumno.prioritary"></v-select>
@@ -126,6 +127,11 @@
  													<th scope="row">Telefono: </th>
  													<td> </td>
  													<td> {{ value.phone}}</td>
+												 </tr>
+												 <tr v-if="value.rol_id==1">
+													 <th scope="row">Fecha de nacimiento: </th>
+													 <td> </td>
+ 													<td> {{ value.birthday}}</td>
  												</tr>
  												<tr>
  													<th scope="row">Rol: </th>
@@ -142,12 +148,12 @@
 													 <td> </td>
  													<td> {{ value.pepe2}} {{value.apellidop2}} {{value.lastnamem2}}</td>
  												</tr>
-
- 												<tr v-if="value.rol_id==1">
-													 <th scope="row">Curso Actual: </th>
+												<tr v-if="value.rol_id==1">
+													 <th scope="row">Fecha de nacimiento: </th>
 													 <td> </td>
- 													<td> {{ value.course_idr}}</td>
+ 													<td> {{ value.birthday}}</td>
  												</tr>
+
  											</table>
 
  										</div>
@@ -246,9 +252,8 @@
 
  											<div class="form-row" v-if="valor.rol_id == 1" class="form-group">
  												<div class="form-group col-md-6">
- 													<label>Curso</label>
-													 <v-select placeholder="Seleccione Tipo de Curso" :options="arrayCurso" label="name" :reduce="cd => cd.id" v-model="valor.course_id"></v-select>
-													 
+ 													<label>Fecha de nacimiento</label>
+													<input v-model="valor.birthday" type="date" class="form-control">
  												</div>
 
  												<div class="form-group col-md-6">
@@ -351,7 +356,8 @@
  					prioritary: "0",
  					representative_id: "",
  					representative_supp_id: "",
- 					contact_movil: ""
+					contact_movil: "",
+					birthday: ""
  				},
  				alumno: {
  					rut: "",
@@ -364,7 +370,7 @@
  					rol_id: "1",
  					commune: "",
  					password: "",
- 					course_id: "",
+ 					birthday: "",
  					prioritary: "0",
  					representative_id: "",
  					representative_supp_id: "",
@@ -439,8 +445,6 @@
  			},
  			create(e) {
  				e.preventDefault();
-
-
  				if (this.alumno.rol_id == 1) {
 
  					alert("alummmno")
@@ -555,7 +559,7 @@
  				this.valor.address = row.address;
  				this.valor.rol_id = row.rol_id;
  				this.valor.commune = row.commune;
- 				this.valor.course_id = row.course_id;
+ 				this.valor.birthday = row.birthday;
  				this.valor.prioritary = row.prioritary;
  				this.valor.representative_id = row.representative_id;
  				this.valor.representative_supp_id = row.representative_supp_id;

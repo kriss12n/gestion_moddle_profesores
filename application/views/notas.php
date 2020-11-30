@@ -2,7 +2,7 @@
 	<div class="animated">
 
 		<div class="row">
-			<div class="col-12 col-md-6 mt-2 mb-2">
+			<div class="col-12 col-md-8 mt-2 mb-2">
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Agregar Notas a Estudiantes</h5>
@@ -15,7 +15,7 @@
 										<div class="form-group col-md-6">
 
 											<label>Selecciona Un Profesor</label>
-											<v-select @input="getSubject()" placeholder="Seleccione cursos" :options="arrayProfes" label="rut" :reduce="profe => profe" v-model="profe"></v-select>
+											<v-select @input="getSubject()" placeholder="Seleccione al profesor" :options="arrayProfes" label="rut" :reduce="profe => profe" v-model="profe"></v-select>
 										</div>
 										<div v-if="profe" class="form-group col-md-6">
 											<fieldset disabled>
@@ -79,7 +79,7 @@
 
 
 									<div class="mt-3 d-flex justify-content-end">
-										<button @click="GuardarNota" class="button btn btn-success">Guardar Nota</button>
+										<button @click="GuardarNota($event)" class="button btn btn-success">Guardar Nota</button>
 									</div>
 								</div>
 							</div>
@@ -274,8 +274,8 @@
 					console.log(this.arraySubject);
 				});
 			},
-			GuardarNota() {
-
+			GuardarNota(e) {
+				e.preventDefault();
 				if (this.alumno.id && this.profe.id && this.asignatura.subject_id && this.Cursoid && this.guardarN.nota&&this.semname) {
 
 					Swal.fire({

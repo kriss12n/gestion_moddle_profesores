@@ -58,11 +58,12 @@ class Alumnos extends CI_Controller
 			"rol_id"=>$this->request->alumno->rol_id,
 			"representative_id"=>$this->request->alumno->representative_id,
 			"representative_supp_id"=>$this->request->alumno->representative_supp_id,
-			"course_id"=>$this->request->alumno->course_id,
+			"birthday"=>$this->request->alumno->birthday,
 			"prioritary"=>$this->request->alumno->prioritary,
 			"commune"=>$this->request->alumno->commune,
 			"contact_movil"=>$this->request->alumno->contact_movil,
 		);
+		
 
 		$this->UsuarioModel->createAlumnos($data);		
 	}
