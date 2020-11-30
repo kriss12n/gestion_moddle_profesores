@@ -171,7 +171,14 @@
 
 			},
 			EditarNota() {
+				axios.post("/index.php/Notas/EditarNota", {
+					editnota: this.editnota
+				}).then((res) => {
 
+					this.getNotasFiltro();
+					$("#Edit").modal("hide");
+					console.log(this.arraytNotasFiltro);
+				});
 			}
 
 

@@ -11,7 +11,7 @@ class NotasModel extends CI_Model
 	
 	public function getNotas()
 	{
-		$this->db->select("s.name as asig, u.name as nombre,u.rut as rut ,u.lastname_p as apellidoP 
+		$this->db->select("califications.id,s.name as asig, u.name as nombre,u.rut as rut ,u.lastname_p as apellidoP 
 		,u.lastname_m as apellidoM, califications.id, califications.calification, califications.craeted_at,califications.student_id,califications.subject_id,califications.calification,califications.semestre ");
 		$this->db->from("califications");
 		$this->db->join('user as u', 'u.id = califications.student_id', 'Left');
@@ -220,6 +220,13 @@ class NotasModel extends CI_Model
 	public function GuardarNota ($data){
 		$query = $this->db->insert('califications',$data);  
 		return true;
+	}
+	public function EditarNota($data,$id){
+
+		$this->db->where("id",$id);
+		$query = $this->db->update("califications",$data);
+		return true;
+
 	}
 
 
